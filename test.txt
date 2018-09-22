@@ -1,0 +1,14 @@
+Mask 4x4 white
+Mask 4x4 black
+Mask 8x8 white
+Mask 8x8 black
+Dilation All 3x3
+Dilation Cross 3x3
+Dilation All 5x5
+Dilation Rhombus 5x5
+Erosion All 3x3
+Erosion Cross 3x3
+Erosion All 5x5
+Erosion Rhombus 5x5
+Swell-Filter 5 6
+Shrink-Filter 3 5
