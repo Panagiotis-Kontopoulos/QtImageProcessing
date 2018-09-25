@@ -5,6 +5,8 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QDir>
+#include <QFile>
+#include <QFileDialog>
 #include <iostream>
 #include <QMessageBox>
 
@@ -13,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QString url = "C:/Users/John/Documents/qtimageprocessing/Images/H01.tiff";
+    QString url = QFileDialog::getOpenFileName(this,"Open Image File","C:/Users/");
 
     QPixmap img;
     QImageReader r(url);
@@ -41,6 +43,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionOpen_Image_triggered()
 {
     QMessageBox::information(this,"Open","Choose File to open");
+    QString url2 = QFileDialog::getOpenFileName(this,"Open Image File","C:/Users/",".tiff");
 
 }
 
