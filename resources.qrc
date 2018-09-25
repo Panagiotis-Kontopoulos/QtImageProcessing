@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>Resources/actions-application-exit.png</file>
+        <file>Resources/new-file-folder.png</file>
+        <file>Resources/open-file-folder.png</file>
+        <file>Resources/save-download.png</file>
+        <file>Resources/save-download-disable.png</file>
+        <file>Resources/Save-as-icon.png</file>
+        <file>Resources/Redo-icon.png</file>
+        <file>Resources/Undo-icon.png</file>
+        <file>Resources/document-edit-flat.png</file>
+        <file>Resources/edit-png-icon-blue-pencil-18.png</file>
+        <file>Resources/mask_edit.png</file>
+        <file>Resources/more.png</file>
+        <file>Resources/noise_956.png</file>
+        <file>Resources/school.png</file>
+        <file>Resources/all_black.png</file>
+        <file>Resources/all_white.png</file>
+        <file>Resources/cross_black.png</file>
+        <file>Resources/cross_white.png</file>
+        <file>Resources/rhombus_black.png</file>
+        <file>Resources/rhombus_white.png</file>
+        <file>Resources/all.png</file>
+    </qresource>
+</RCC>

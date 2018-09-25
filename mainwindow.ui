@@ -41,6 +41,7 @@
     <addaction name="actionSave_Image"/>
     <addaction name="actionEnable_Auto_Save"/>
     <addaction name="actionDisable_Auto_Save"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -57,6 +58,10 @@
      <property name="title">
       <string>Add Noise</string>
      </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/res/Resources/noise_956.png</normaloff>:/res/Resources/noise_956.png</iconset>
+     </property>
      <addaction name="actionGasussian_Noise"/>
      <addaction name="actionRandom_Noise"/>
     </widget>
@@ -64,9 +69,17 @@
      <property name="title">
       <string>Masks</string>
      </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/res/Resources/mask_edit.png</normaloff>:/res/Resources/mask_edit.png</iconset>
+     </property>
      <widget class="QMenu" name="menuMask_4x4">
       <property name="title">
        <string>Mask 4x4</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/res/Resources/mask_edit.png</normaloff>:/res/Resources/mask_edit.png</iconset>
       </property>
       <addaction name="actionAll_White"/>
       <addaction name="actionAll_Black"/>
@@ -74,6 +87,10 @@
      <widget class="QMenu" name="menuMask_8x8">
       <property name="title">
        <string>Mask 8x8</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/res/Resources/mask_edit.png</normaloff>:/res/Resources/mask_edit.png</iconset>
       </property>
       <addaction name="actionAll_White_2"/>
       <addaction name="actionAll_Black_2"/>
@@ -85,16 +102,28 @@
      <property name="title">
       <string>F-Measure</string>
      </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/res/Resources/school.png</normaloff>:/res/Resources/school.png</iconset>
+     </property>
      <addaction name="actionComparison"/>
-     <addaction name="actionValuation"/>
+     <addaction name="actionEvaluation"/>
     </widget>
     <widget class="QMenu" name="menuMathematical_Morphology">
      <property name="title">
       <string>Mathematical Morphology</string>
      </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/res/Resources/edit-png-icon-blue-pencil-18.png</normaloff>:/res/Resources/edit-png-icon-blue-pencil-18.png</iconset>
+     </property>
      <widget class="QMenu" name="menuDilation">
       <property name="title">
        <string>Dilation</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/res/Resources/edit-png-icon-blue-pencil-18.png</normaloff>:/res/Resources/edit-png-icon-blue-pencil-18.png</iconset>
       </property>
       <addaction name="actionAll_3x3"/>
       <addaction name="actionCross_3x3"/>
@@ -105,6 +134,10 @@
      <widget class="QMenu" name="menuErosion">
       <property name="title">
        <string>Erosion</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/res/Resources/edit-png-icon-blue-pencil-18.png</normaloff>:/res/Resources/edit-png-icon-blue-pencil-18.png</iconset>
       </property>
       <addaction name="actionAll_3x3_2"/>
       <addaction name="actionCross_3x3_2"/>
@@ -118,6 +151,10 @@
     <widget class="QMenu" name="menuFilters">
      <property name="title">
       <string>Filters</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/res/Resources/document-edit-flat.png</normaloff>:/res/Resources/document-edit-flat.png</iconset>
      </property>
      <addaction name="actionSwell_Filter"/>
      <addaction name="actionShrink_Filter"/>
@@ -147,137 +184,252 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Image">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/open-file-folder.png</normaloff>:/res/Resources/open-file-folder.png</iconset>
+   </property>
    <property name="text">
     <string>Open Image</string>
    </property>
   </action>
   <action name="actionSave_Image">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/save-download.png</normaloff>:/res/Resources/save-download.png</iconset>
+   </property>
    <property name="text">
     <string>Save Image</string>
    </property>
   </action>
   <action name="actionEnable_Auto_Save">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/Save-as-icon.png</normaloff>:/res/Resources/Save-as-icon.png</iconset>
+   </property>
    <property name="text">
     <string>Enable Auto Save</string>
    </property>
   </action>
   <action name="actionDisable_Auto_Save">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/save-download-disable.png</normaloff>:/res/Resources/save-download-disable.png</iconset>
+   </property>
    <property name="text">
     <string>Disable Auto Save</string>
    </property>
   </action>
   <action name="actionMethod_Input">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/new-file-folder.png</normaloff>:/res/Resources/new-file-folder.png</iconset>
+   </property>
    <property name="text">
     <string>Method Input</string>
    </property>
   </action>
   <action name="actionMore">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/more.png</normaloff>:/res/Resources/more.png</iconset>
+   </property>
    <property name="text">
     <string>More</string>
    </property>
   </action>
   <action name="actionGasussian_Noise">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/noise_956.png</normaloff>:/res/Resources/noise_956.png</iconset>
+   </property>
    <property name="text">
     <string>Gasussian Noise</string>
    </property>
   </action>
   <action name="actionRandom_Noise">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/noise_956.png</normaloff>:/res/Resources/noise_956.png</iconset>
+   </property>
    <property name="text">
     <string>Random Noise</string>
    </property>
   </action>
   <action name="actionAll_White">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_white.png</normaloff>:/res/Resources/all_white.png</iconset>
+   </property>
    <property name="text">
     <string>All White</string>
    </property>
   </action>
   <action name="actionAll_Black">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_black.png</normaloff>:/res/Resources/all_black.png</iconset>
+   </property>
    <property name="text">
     <string>All Black</string>
    </property>
   </action>
   <action name="actionAll_White_2">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_white.png</normaloff>:/res/Resources/all_white.png</iconset>
+   </property>
    <property name="text">
     <string>All White</string>
    </property>
   </action>
   <action name="actionAll_Black_2">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_black.png</normaloff>:/res/Resources/all_black.png</iconset>
+   </property>
    <property name="text">
     <string>All Black</string>
    </property>
   </action>
   <action name="actionComparison">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/school.png</normaloff>:/res/Resources/school.png</iconset>
+   </property>
    <property name="text">
     <string>Comparison</string>
    </property>
   </action>
   <action name="actionAll_3x3">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_black.png</normaloff>:/res/Resources/all_black.png</iconset>
+   </property>
    <property name="text">
     <string>All 3x3</string>
    </property>
   </action>
   <action name="actionCross_3x3">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/cross_black.png</normaloff>:/res/Resources/cross_black.png</iconset>
+   </property>
    <property name="text">
     <string>Cross 3x3</string>
    </property>
   </action>
   <action name="actionAll_5x5">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_black.png</normaloff>:/res/Resources/all_black.png</iconset>
+   </property>
    <property name="text">
     <string>All 5x5</string>
    </property>
   </action>
   <action name="actionRhombus_5x5">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/rhombus_black.png</normaloff>:/res/Resources/rhombus_black.png</iconset>
+   </property>
    <property name="text">
     <string>Rhombus 5x5</string>
    </property>
   </action>
   <action name="actionAll_3x3_2">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_white.png</normaloff>:/res/Resources/all_white.png</iconset>
+   </property>
    <property name="text">
     <string>All 3x3</string>
    </property>
   </action>
   <action name="actionCross_3x3_2">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/cross_white.png</normaloff>:/res/Resources/cross_white.png</iconset>
+   </property>
    <property name="text">
     <string>Cross 3x3</string>
    </property>
   </action>
   <action name="actionAll_5x5_2">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/all_white.png</normaloff>:/res/Resources/all_white.png</iconset>
+   </property>
    <property name="text">
-    <string>All 5x5</string>
+    <string> All 5x5</string>
    </property>
   </action>
   <action name="actionRhombus_5x5_2">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/rhombus_white.png</normaloff>:/res/Resources/rhombus_white.png</iconset>
+   </property>
    <property name="text">
     <string>Rhombus 5x5</string>
    </property>
   </action>
-  <action name="actionValuation">
+  <action name="actionEvaluation">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/school.png</normaloff>:/res/Resources/school.png</iconset>
+   </property>
    <property name="text">
     <string>Evaluation</string>
    </property>
   </action>
   <action name="actionSwell_Filter">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/document-edit-flat.png</normaloff>:/res/Resources/document-edit-flat.png</iconset>
+   </property>
    <property name="text">
     <string>Swell Filter</string>
    </property>
   </action>
   <action name="actionShrink_Filter">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/document-edit-flat.png</normaloff>:/res/Resources/document-edit-flat.png</iconset>
+   </property>
    <property name="text">
     <string>Shrink Filter</string>
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/Undo-icon.png</normaloff>:/res/Resources/Undo-icon.png</iconset>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
   </action>
   <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/Redo-icon.png</normaloff>:/res/Resources/Redo-icon.png</iconset>
+   </property>
    <property name="text">
     <string>Redo</string>
    </property>
   </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/Resources/actions-application-exit.png</normaloff>:/res/Resources/actions-application-exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
