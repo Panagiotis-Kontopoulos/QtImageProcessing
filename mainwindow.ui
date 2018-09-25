@@ -30,9 +30,112 @@
      <x>0</x>
      <y>0</y>
      <width>788</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen_Image"/>
+    <addaction name="actionSave_Image"/>
+    <addaction name="actionEnable_Auto_Save"/>
+    <addaction name="actionDisable_Auto_Save"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <widget class="QMenu" name="menuAdd_Noise">
+     <property name="title">
+      <string>Add Noise</string>
+     </property>
+     <addaction name="actionGasussian_Noise"/>
+     <addaction name="actionRandom_Noise"/>
+    </widget>
+    <widget class="QMenu" name="menuMasks">
+     <property name="title">
+      <string>Masks</string>
+     </property>
+     <widget class="QMenu" name="menuMask_4x4">
+      <property name="title">
+       <string>Mask 4x4</string>
+      </property>
+      <addaction name="actionAll_White"/>
+      <addaction name="actionAll_Black"/>
+     </widget>
+     <widget class="QMenu" name="menuMask_8x8">
+      <property name="title">
+       <string>Mask 8x8</string>
+      </property>
+      <addaction name="actionAll_White_2"/>
+      <addaction name="actionAll_Black_2"/>
+     </widget>
+     <addaction name="menuMask_4x4"/>
+     <addaction name="menuMask_8x8"/>
+    </widget>
+    <widget class="QMenu" name="menuF_Measure">
+     <property name="title">
+      <string>F-Measure</string>
+     </property>
+     <addaction name="actionComparison"/>
+     <addaction name="actionValuation"/>
+    </widget>
+    <widget class="QMenu" name="menuMathematical_Morphology">
+     <property name="title">
+      <string>Mathematical Morphology</string>
+     </property>
+     <widget class="QMenu" name="menuDilation">
+      <property name="title">
+       <string>Dilation</string>
+      </property>
+      <addaction name="actionAll_3x3"/>
+      <addaction name="actionCross_3x3"/>
+      <addaction name="separator"/>
+      <addaction name="actionAll_5x5"/>
+      <addaction name="actionRhombus_5x5"/>
+     </widget>
+     <widget class="QMenu" name="menuErosion">
+      <property name="title">
+       <string>Erosion</string>
+      </property>
+      <addaction name="actionAll_3x3_2"/>
+      <addaction name="actionCross_3x3_2"/>
+      <addaction name="separator"/>
+      <addaction name="actionAll_5x5_2"/>
+      <addaction name="actionRhombus_5x5_2"/>
+     </widget>
+     <addaction name="menuDilation"/>
+     <addaction name="menuErosion"/>
+    </widget>
+    <widget class="QMenu" name="menuFilters">
+     <property name="title">
+      <string>Filters</string>
+     </property>
+     <addaction name="actionSwell_Filter"/>
+     <addaction name="actionShrink_Filter"/>
+    </widget>
+    <addaction name="menuMasks"/>
+    <addaction name="menuMathematical_Morphology"/>
+    <addaction name="menuFilters"/>
+    <addaction name="actionMethod_Input"/>
+    <addaction name="separator"/>
+    <addaction name="menuF_Measure"/>
+    <addaction name="separator"/>
+    <addaction name="menuAdd_Noise"/>
+    <addaction name="separator"/>
+    <addaction name="actionMore"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuTools"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -43,6 +146,136 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpen_Image">
+   <property name="text">
+    <string>Open Image</string>
+   </property>
+  </action>
+  <action name="actionSave_Image">
+   <property name="text">
+    <string>Save Image</string>
+   </property>
+  </action>
+  <action name="actionEnable_Auto_Save">
+   <property name="text">
+    <string>Enable Auto Save</string>
+   </property>
+  </action>
+  <action name="actionDisable_Auto_Save">
+   <property name="text">
+    <string>Disable Auto Save</string>
+   </property>
+  </action>
+  <action name="actionMethod_Input">
+   <property name="text">
+    <string>Method Input</string>
+   </property>
+  </action>
+  <action name="actionMore">
+   <property name="text">
+    <string>More</string>
+   </property>
+  </action>
+  <action name="actionGasussian_Noise">
+   <property name="text">
+    <string>Gasussian Noise</string>
+   </property>
+  </action>
+  <action name="actionRandom_Noise">
+   <property name="text">
+    <string>Random Noise</string>
+   </property>
+  </action>
+  <action name="actionAll_White">
+   <property name="text">
+    <string>All White</string>
+   </property>
+  </action>
+  <action name="actionAll_Black">
+   <property name="text">
+    <string>All Black</string>
+   </property>
+  </action>
+  <action name="actionAll_White_2">
+   <property name="text">
+    <string>All White</string>
+   </property>
+  </action>
+  <action name="actionAll_Black_2">
+   <property name="text">
+    <string>All Black</string>
+   </property>
+  </action>
+  <action name="actionComparison">
+   <property name="text">
+    <string>Comparison</string>
+   </property>
+  </action>
+  <action name="actionAll_3x3">
+   <property name="text">
+    <string>All 3x3</string>
+   </property>
+  </action>
+  <action name="actionCross_3x3">
+   <property name="text">
+    <string>Cross 3x3</string>
+   </property>
+  </action>
+  <action name="actionAll_5x5">
+   <property name="text">
+    <string>All 5x5</string>
+   </property>
+  </action>
+  <action name="actionRhombus_5x5">
+   <property name="text">
+    <string>Rhombus 5x5</string>
+   </property>
+  </action>
+  <action name="actionAll_3x3_2">
+   <property name="text">
+    <string>All 3x3</string>
+   </property>
+  </action>
+  <action name="actionCross_3x3_2">
+   <property name="text">
+    <string>Cross 3x3</string>
+   </property>
+  </action>
+  <action name="actionAll_5x5_2">
+   <property name="text">
+    <string>All 5x5</string>
+   </property>
+  </action>
+  <action name="actionRhombus_5x5_2">
+   <property name="text">
+    <string>Rhombus 5x5</string>
+   </property>
+  </action>
+  <action name="actionValuation">
+   <property name="text">
+    <string>Evaluation</string>
+   </property>
+  </action>
+  <action name="actionSwell_Filter">
+   <property name="text">
+    <string>Swell Filter</string>
+   </property>
+  </action>
+  <action name="actionShrink_Filter">
+   <property name="text">
+    <string>Shrink Filter</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="text">
+    <string>Redo</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
