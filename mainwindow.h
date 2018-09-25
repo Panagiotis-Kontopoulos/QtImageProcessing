@@ -72,6 +72,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QPixmap image;
+    QImage  *imageObject;
+    QString file_path, file_name;
+
 };
 
 #endif // MAINWINDOW_H

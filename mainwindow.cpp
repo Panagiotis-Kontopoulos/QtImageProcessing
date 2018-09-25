@@ -15,24 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QString url = QFileDialog::getOpenFileName(this,"Open Image File","C:/Users/");
-
-    QPixmap img;
-    QImageReader r(url);
-    r.setDecideFormatFromContent(true);
-    QImage i = r.read();
-    if (!i.isNull())
-    {
-        img = QPixmap::fromImage(i);
-
-        int w = ui->image_label->width();
-        int h = ui->image_label->height();
-
-        std::cout<<w;
-        std::cout<<h;
-        ui->image_label->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio));
-    }
-
 }
 
 MainWindow::~MainWindow()
@@ -42,14 +24,35 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionOpen_Image_triggered()
 {
-    QMessageBox::information(this,"Open","Choose File to open");
-    QString url2 = QFileDialog::getOpenFileName(this,"Open Image File","C:/Users/",".tiff");
+    QString file_url = QFileDialog::getOpenFileName(this,"Open Image File",QDir::currentPath(),"*.tiff");
+    QFileInfo fileInfo(file_url);
+    file_path = fileInfo.path();
+    file_name = fileInfo.fileName();
+    QMessageBox::information(this,file_name,file_name);
+    QMessageBox::information(this,file_path,file_path);
+    imageObject = new QImage;
+    QImageReader imageReader(file_url);
+    imageReader.setDecideFormatFromContent(true);
+    *imageObject = imageReader.read();
+    if (!imageObject->isNull())
+    {
+        image = QPixmap::fromImage(*imageObject);
+
+        int w = ui->image_label->width();
+        int h = ui->image_label->height();
+
+        std::cout<<w;
+        std::cout<<h;
+        ui->image_label->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
+    }
 
 }
 
 void MainWindow::on_actionSave_Image_triggered()
 {
-    QMessageBox::information(this,"Save","Save File");
+    QMessageBox::information(this,"Save","Save File to "+file_path);
+    imageObject->save(file_path+"/saved_"+file_name);
+
 }
 
 void MainWindow::on_actionEnable_Auto_Save_triggered()
