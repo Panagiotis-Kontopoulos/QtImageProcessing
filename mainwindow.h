@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
 
 namespace Ui {
 class MainWindow;
@@ -72,9 +73,12 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QPixmap image;
+    QPixmap image, original_image;
     QImage  *imageObject;
     QString file_path, file_name;
+    int Ix,Iy;
+    float mean, deviation;
+    QGraphicsScene *scene;
 
 };
 

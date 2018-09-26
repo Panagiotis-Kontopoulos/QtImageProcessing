@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <iostream>
 #include <QMessageBox>
+#include <QGraphicsView>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,27 +25,45 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionOpen_Image_triggered()
 {
-    QString file_url = QFileDialog::getOpenFileName(this,"Open Image File",QDir::currentPath(),"*.tiff");
+    QString file_url = QFileDialog::getOpenFileName(this,tr("Open Image File"),QDir::currentPath(),tr("*.tiff"));
     QFileInfo fileInfo(file_url);
     file_path = fileInfo.path();
     file_name = fileInfo.fileName();
     QMessageBox::information(this,file_name,file_name);
     QMessageBox::information(this,file_path,file_path);
+    QMessageBox::information(this,file_url,file_url);
     imageObject = new QImage;
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
     *imageObject = imageReader.read();
-    if (!imageObject->isNull())
-    {
-        image = QPixmap::fromImage(*imageObject);
+    image = QPixmap::fromImage(*imageObject);
 
-        int w = ui->image_label->width();
-        int h = ui->image_label->height();
 
-        std::cout<<w;
-        std::cout<<h;
-        ui->image_label->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
-    }
+    Ix = image.width();
+    Iy = image.height();
+
+    std::cout<<Ix;
+    std::cout<<Iy;
+        //ui->image_label->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
+
+
+    //std::cout<<imageObject->isGrayscale();
+    for (int x=1;x<Ix-1;x++)
+      for (int y=1;y<Iy-1;y++)
+      {
+          int current_pixel_color = imageObject->pixelIndex(x,y);
+          std::cout<<current_pixel_color;
+          if (current_pixel_color>1)
+          {
+              std::cout<<"Greater than 1";
+          }
+      }
+    scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    //ui->graphicsView->repaint();
 
 }
 
@@ -67,6 +86,7 @@ void MainWindow::on_actionDisable_Auto_Save_triggered()
 
 void MainWindow::on_actionExit_triggered()
 {
+
     QApplication::quit();
 }
 
@@ -83,6 +103,84 @@ void MainWindow::on_actionMore_triggered()
 void MainWindow::on_actionGasussian_Noise_triggered()
 {
     QMessageBox::information(this,"Gaussian","Add Gaussian Noise");
+    deviation = 1;
+    mean = 2;
+    std::cout<<"Adding Noise";
+    //Add Gaussian Noise to the Image
+      float pi = 3.14159265359;
+      float e = 2.718;
+      float prob = 0.0, min=1000,max=0;
+      float** temp=new float*[Ix];
+      for (int x=0;x<Ix;x++)
+      temp[x]=new float[Iy];
+//      Form7->ShowModal();
+
+//        ImagXpress7_1->SaveToBuffer = true;
+//        ImagXpress7_1->SaveFileType =  FT_TIFF;
+//        ImagXpress7_1->SaveFile ();
+
+//        unsigned char *IMAGE;
+//        HANDLE hIM = (HANDLE)ImagXpress7_1->SaveBufferHandle;
+//        IMAGE = (unsigned char *)GlobalLock(hIM);
+//        long ln = GlobalSize(hIM);
+//        long offs=ln-(long)w*Iy;
+//        GlobalUnlock(hIM);
+
+//        Screen->Cursor =  crHourGlass;
+//        Form5->ProgressBar1->Max = w-1;
+//        Form5->Show();
+
+        int bl=0,wh=0;
+        for (int x=0;x<Ix;x++)
+        {
+//          Form5->ProgressBar1->Position = x;
+          for (int y=0;y<Iy;y++)
+          {
+            prob = (1/deviation*sqrt(2*pi))*pow(e,(0-1)*(pow(((long)rand()*(255-0)/32767+1)-mean,2)/(2*pow(deviation,2))));
+            temp[x][y]=prob;
+            if (prob > max)max=prob;
+            if (prob < min)min=prob;
+          }
+        }
+        //ShowMessage("Minimum Probability : "+FloatToStr(min)+" %\nMaximum Probability : "+FloatToStr(max)+" %\nAverage Probability : "+FloatToStr((max+min)/2)+" %");
+        for (int x=1;x<Ix-1;x++)
+        {
+//          Form5->ProgressBar1->Position = x;
+          for (int y=1;y<Iy-1;y++)
+          {
+            if (temp[x][y] >= (min+max)/2)
+            {
+              imageObject->setPixel(x,y,1);
+              bl++;
+            }
+            else wh++;
+            //imageObject->setPixel(x,y,1);
+//            int current_pixel_color = imageObject->pixelIndex(x,y);
+//            std::cout<<current_pixel_color;
+          }
+        }
+//        ShowMessage("Noise changed : "+IntToStr(bl)+" pixels\nUnchanged : "+IntToStr(wh)+" pixels");
+
+//        ImagXpress7_1->LoadBuffer((long)IMAGE);
+//        GlobalFree(IMAGE);
+//        Form5->Close();
+//        if (savestages==1)
+//        {
+//           Form1->stagesSave();
+//        }
+//        Screen->Cursor =  crDefault;
+
+//        image = QPixmap::fromImage(*imageObject);
+//        ui->image_label->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
+//        ui->image_label->repaint();
+        update();
+        image = QPixmap::fromImage(*imageObject);
+        if(scene==NULL) scene = new QGraphicsScene(this);
+        scene->addPixmap(image);
+        scene->setSceneRect(image.rect());
+        ui->graphicsView->setScene(scene);
+        ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+        ui->graphicsView->repaint();
 }
 
 void MainWindow::on_actionRandom_Noise_triggered()
