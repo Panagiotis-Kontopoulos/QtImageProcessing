@@ -190,22 +190,114 @@ void MainWindow::on_actionRandom_Noise_triggered()
 
 void MainWindow::on_actionAll_White_triggered()
 {
-
+    //Mask 4x4 All White
+    for (int x=1;x<Ix-2;x++)
+    {
+//          Form5->ProgressBar1->Position = x;
+      for (int y=1;y<Iy-2;y++)
+      {
+        if (imageObject->pixelIndex(x-1,y)==0 && imageObject->pixelIndex(x+1,y)==0 && imageObject->pixelIndex(x,y)==1 && imageObject->pixelIndex(x,y-1)==0 && imageObject->pixelIndex(x,y+1)==0)
+        {
+          imageObject->setPixel(x,y,0);
+        }
+        //imageObject->setPixel(x,y,1);
+//            int current_pixel_color = imageObject->pixelIndex(x,y);
+//            std::cout<<current_pixel_color;
+      }
+    }
+    update();
+    image = QPixmap::fromImage(*imageObject);
+    if(scene==NULL) scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    ui->graphicsView->repaint();
 }
 
 void MainWindow::on_actionAll_Black_triggered()
 {
-
+    //Mask 4x4 All Black
+    for (int x=1;x<Ix-2;x++)
+    {
+//          Form5->ProgressBar1->Position = x;
+      for (int y=1;y<Iy-2;y++)
+      {
+        if (imageObject->pixelIndex(x-1,y)==1 && imageObject->pixelIndex(x+1,y)==1 && imageObject->pixelIndex(x,y)==0 && imageObject->pixelIndex(x,y-1)==1 && imageObject->pixelIndex(x,y+1)==1)
+        {
+          imageObject->setPixel(x,y,1);
+        }
+        //imageObject->setPixel(x,y,1);
+//            int current_pixel_color = imageObject->pixelIndex(x,y);
+//            std::cout<<current_pixel_color;
+      }
+    }
+    update();
+    image = QPixmap::fromImage(*imageObject);
+    if(scene==NULL) scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    ui->graphicsView->repaint();
 }
 
 void MainWindow::on_actionAll_White_2_triggered()
 {
-
+    //Mask 8x8 All White
+    for (int x=1;x<Ix-2;x++)
+    {
+//          Form5->ProgressBar1->Position = x;
+      for (int y=1;y<Iy-2;y++)
+      {
+        if (imageObject->pixelIndex(x-1,y+1)==0 && imageObject->pixelIndex(x,y+1)==0 && imageObject->pixelIndex(x+1,y+1)==0)
+            if (imageObject->pixelIndex(x-1,y)==0 && imageObject->pixelIndex(x,y)==1 && imageObject->pixelIndex(x+1,y)==0)
+                if (imageObject->pixelIndex(x-1,y-1)==0 && imageObject->pixelIndex(x,y-1)==0 && imageObject->pixelIndex(x+1,y-1)==0)
+                {
+                  imageObject->setPixel(x,y,0);
+                }
+        //imageObject->setPixel(x,y,1);
+//            int current_pixel_color = imageObject->pixelIndex(x,y);
+//            std::cout<<current_pixel_color;
+      }
+    }
+    update();
+    image = QPixmap::fromImage(*imageObject);
+    if(scene==NULL) scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    ui->graphicsView->repaint();
 }
 
 void MainWindow::on_actionAll_Black_2_triggered()
 {
-
+    //Mask 8x8 All Black
+    for (int x=1;x<Ix-2;x++)
+    {
+//          Form5->ProgressBar1->Position = x;
+      for (int y=1;y<Iy-2;y++)
+      {
+        if (imageObject->pixelIndex(x-1,y+1)==1 && imageObject->pixelIndex(x,y+1)==1 && imageObject->pixelIndex(x+1,y+1)==1)
+            if (imageObject->pixelIndex(x-1,y)==1 && imageObject->pixelIndex(x,y)==0 && imageObject->pixelIndex(x+1,y)==1)
+                if (imageObject->pixelIndex(x-1,y-1)==1 && imageObject->pixelIndex(x,y-1)==1 && imageObject->pixelIndex(x+1,y-1)==1)
+                {
+                  imageObject->setPixel(x,y,1);
+                }
+        //imageObject->setPixel(x,y,1);
+//            int current_pixel_color = imageObject->pixelIndex(x,y);
+//            std::cout<<current_pixel_color;
+      }
+    }
+    update();
+    image = QPixmap::fromImage(*imageObject);
+    if(scene==NULL) scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    ui->graphicsView->repaint();
 }
 
 void MainWindow::on_actionComparison_triggered()
@@ -220,7 +312,49 @@ void MainWindow::on_actionEvaluation_triggered()
 
 void MainWindow::on_actionAll_3x3_triggered()
 {
+    //Cube 3x3 dilation
+    int** temp=new int*[Ix];
+      for (int x=0;x<Ix;x++)
+         temp[x]=new int[Iy];
+      for (int x=1;x<Ix-2;x++)
+      {
+//         Form5->ProgressBar1->Position = x;
+         for (int y=1;y<Iy-2;y++)
+         {
+            if (imageObject->pixelIndex(x,y)==0)
+            {  //x-1
+               if (x>0 && y>0 && imageObject->pixelIndex(x-1,y-1)==0)temp[x-1][y-1]=2;
+               if (x>0 && imageObject->pixelIndex(x-1,y)==0)temp[x-1][y]=2;
+               if (x>0 && y+1<Iy && imageObject->pixelIndex(x-1,y+1)==0)temp[x-1][y+1]=2;
+               //x
+               if (y>0 && imageObject->pixelIndex(x,y-1)==0)temp[x][y-1]=2;
+               if (y+1<Iy && imageObject->pixelIndex(x,y+1)==0)temp[x][y+1]=2;
+               //x+1
+               if (x+1<Ix && y>0 && imageObject->pixelIndex(x+1,y-1)==0)temp[x+1][y-1]=2;
+               if (x+1<Ix && imageObject->pixelIndex(x+1,y)==0)temp[x+1][y]=2;
+               if (x+1<Ix && y+1<Iy && imageObject->pixelIndex(x+1,y+1)==0)temp[x+1][y+1]=2;
+            }
+         }
+      }
+      for (int x=0;x<Ix;x++)
+      {
+//         Form5->ProgressBar1->Position = x;
+         for (int y=0;y<Iy;y++)
+         {
+            if (temp[x][y]==2)imageObject->setPixel(x,y,1);
+         }
+      }
 
+      update();
+      image = QPixmap::fromImage(*imageObject);
+      if(scene==NULL) scene = new QGraphicsScene(this);
+      scene->addPixmap(image);
+      scene->setSceneRect(image.rect());
+      ui->graphicsView->setScene(scene);
+      ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+      ui->graphicsView->repaint();
+      for (int x=0;x<Ix;x++)free(temp[x]);
+      free(temp);
 }
 
 void MainWindow::on_actionCross_3x3_triggered()
@@ -230,7 +364,67 @@ void MainWindow::on_actionCross_3x3_triggered()
 
 void MainWindow::on_actionAll_5x5_triggered()
 {
+    //Cube 5x5 dilation
+    int** temp=new int*[Ix];
+      for (int x=0;x<Ix;x++)
+         temp[x]=new int[Iy];
+      for (int x=1;x<Ix-3;x++)
+      {
+//         Form5->ProgressBar1->Position = x;
+         for (int y=1;y<Iy-3;y++)
+         {
+            if (imageObject->pixelIndex(x,y)==0)
+            {  //x-2
+               if (x>0 && y>0 && imageObject->pixelIndex(x-2,y-2)==0)temp[x-2][y-2]=2;
+               if (x>0 && y>0 && imageObject->pixelIndex(x-2,y-1)==0)temp[x-2][y-1]=2;
+               if (x>0 && imageObject->pixelIndex(x-2,y)==0)temp[x-2][y]=2;
+               if (x>0 && y+1<Iy && imageObject->pixelIndex(x-2,y+1)==0)temp[x-2][y+1]=2;
+               if (x>0 && y+1<Iy && imageObject->pixelIndex(x-2,y+1)==0)temp[x-2][y+2]=2;
+               //x-1
+               if (x>0 && y>0 && imageObject->pixelIndex(x-1,y-2)==0)temp[x-1][y-2]=2;
+               if (x>0 && y>0 && imageObject->pixelIndex(x-1,y-1)==0)temp[x-1][y-1]=2;
+               if (x>0 && imageObject->pixelIndex(x-1,y)==0)temp[x-1][y]=2;
+               if (x>0 && y+1<Iy && imageObject->pixelIndex(x-1,y+1)==0)temp[x-1][y+1]=2;
+               if (x>0 && y+1<Iy && imageObject->pixelIndex(x-1,y+2)==0)temp[x-1][y+2]=2;
+               //x
+               if (y>0 && imageObject->pixelIndex(x,y-1)==0)temp[x][y-2]=2;
+               if (y>0 && imageObject->pixelIndex(x,y-1)==0)temp[x][y-1]=2;
+               if (y+1<Iy && imageObject->pixelIndex(x,y+1)==0)temp[x][y+1]=2;
+               if (y+1<Iy && imageObject->pixelIndex(x,y+2)==0)temp[x][y+2]=2;
+               //x+1
+               if (x+1<Ix && y>0 && imageObject->pixelIndex(x+1,y-2)==0)temp[x+1][y-2]=2;
+               if (x+1<Ix && y>0 && imageObject->pixelIndex(x+1,y-1)==0)temp[x+1][y-1]=2;
+               if (x+1<Ix && imageObject->pixelIndex(x+1,y)==0)temp[x+1][y]=2;
+               if (x+1<Ix && y+1<Iy && imageObject->pixelIndex(x+1,y+1)==0)temp[x+1][y+1]=2;
+               if (x+1<Ix && y+1<Iy && imageObject->pixelIndex(x+1,y+2)==0)temp[x+1][y+2]=2;
+               //x+2
+               if (x+1<Ix && y>0 && imageObject->pixelIndex(x+2,y-2)==0)temp[x+2][y-2]=2;
+               if (x+1<Ix && y>0 && imageObject->pixelIndex(x+2,y-1)==0)temp[x+2][y-1]=2;
+               if (x+1<Ix && imageObject->pixelIndex(x+2,y)==0)temp[x+2][y]=2;
+               if (x+1<Ix && y+1<Iy && imageObject->pixelIndex(x+2,y+1)==0)temp[x+2][y+1]=2;
+               if (x+1<Ix && y+1<Iy && imageObject->pixelIndex(x+2,y+2)==0)temp[x+2][y+2]=2;
+            }
+         }
+      }
+      for (int x=0;x<Ix;x++)
+      {
+//         Form5->ProgressBar1->Position = x;
+         for (int y=0;y<Iy;y++)
+         {
+            if (temp[x][y]==2)imageObject->setPixel(x,y,1);
+         }
+      }
 
+      update();
+      image = QPixmap::fromImage(*imageObject);
+      if(scene==NULL) scene = new QGraphicsScene(this);
+      scene->addPixmap(image);
+      scene->setSceneRect(image.rect());
+      ui->graphicsView->setScene(scene);
+      ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+      ui->graphicsView->repaint();
+      for (int x=0;x<Ix;x++)free(temp[x]);
+      free(temp);
 }
 
 void MainWindow::on_actionRhombus_5x5_triggered()
