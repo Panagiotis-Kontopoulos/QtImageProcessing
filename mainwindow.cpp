@@ -10,6 +10,11 @@
 #include <iostream>
 #include <QMessageBox>
 #include <QGraphicsView>
+#include <QDialog>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QDialogButtonBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -796,18 +801,50 @@ void MainWindow::on_actionRhombus_5x5_2_triggered()
 
 void MainWindow::on_actionSwell_Filter_triggered()
 {
-      //Swell Filter
-      int** temp=new int*[Ix];
-      for (int x=0;x<Ix;x++)
-      temp[x]=new int[Iy];
+    //Swell Filter
+    QDialog dialog(this);
+    // Use a layout allowing to have a label next to each field
+    QFormLayout form(&dialog);
 
-      int windowsize = 10; //Must be given from user
-      int ksw = 1; //Must be given by user, W Threshhold
-      int ksh = 1; //Must be given by user, H Threshhold
-      int maxnumofpixels=windowsize*windowsize;
-      int black=0;
-      for (int y=windowsize;y<Iy-windowsize;y++)
-      {
+    // Add the lineEdits with their respective labels
+    QList<QSpinBox *> fields;
+    QSpinBox *ws = new QSpinBox(&dialog);
+    ws->setValue(10);
+    QSpinBox *ht = new QSpinBox(&dialog);
+    ht->setValue(1);
+    QSpinBox *wt = new QSpinBox(&dialog);
+    wt->setValue(1);
+
+    form.addRow("Window Size", ws);
+    form.addRow("W Threshhold", ht);
+    form.addRow("H Threshhold",wt);
+
+    fields << ws;
+    fields << ht;
+    fields << wt;
+
+    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    int windowsize,ksw,ksh;
+
+    if (dialog.exec() == QDialog::Accepted) {
+        windowsize = fields[0]->value();
+        ksw = fields[1]->value();
+        ksh = fields[2]->value();
+
+        int maxnumofpixels=windowsize*windowsize;
+        int** temp=new int*[Ix];
+        for (int x=0;x<Ix;x++)
+        temp[x]=new int[Iy];
+
+        int black=0;
+        for (int y=windowsize;y<Iy-windowsize;y++)
+        {
            for (int x=windowsize;x<Ix-windowsize;x++)
            {
               int y1=y-((windowsize-1)/2);
