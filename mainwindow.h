@@ -71,12 +71,15 @@ private slots:
 
     void on_actionRedo_triggered();
 
+    void auto_save_Function();
+
 private:
     Ui::MainWindow *ui;
     QPixmap image, original_image;
     QImage  *imageObject, *original_imageObject;
     QString file_path, file_name;
-    int Ix,Iy;
+    int Ix,Iy,stage_num;
+    bool auto_save_enable;
     float mean, deviation;
     QGraphicsScene *scene;
 

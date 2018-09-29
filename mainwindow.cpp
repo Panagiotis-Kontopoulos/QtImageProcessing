@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMenu>
 #include <QImageReader>
 #include <QImage>
 #include <QPixmap>
@@ -15,6 +16,9 @@
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QDialogButtonBox>
+#include <QDebug>
+
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,12 +42,17 @@ void MainWindow::on_actionOpen_Image_triggered()
     QMessageBox::information(this,file_path,file_path);
     QMessageBox::information(this,file_url,file_url);
     imageObject = new QImage;
+    original_imageObject = new QImage;
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
     *imageObject = imageReader.read();
+    qDebug()<<"Image Read";
     *original_imageObject = imageObject->copy();
+    qDebug()<<"Image Copy";
     image = QPixmap::fromImage(*imageObject);
+    qDebug()<<"Image QPixmap";
     original_image = QPixmap::fromImage(*original_imageObject);
+    qDebug()<<"Original Image QPixmap";
 
 
     Ix = image.width();
@@ -59,7 +68,7 @@ void MainWindow::on_actionOpen_Image_triggered()
         for (int y=1;y<Iy-1;y++)
         {
             int current_pixel_color = imageObject->pixelIndex(x,y);
-            std::cout<<current_pixel_color;
+            //std::cout<<current_pixel_color;
             if (current_pixel_color>1)
             {
                 std::cout<<"Greater than 1";
@@ -71,6 +80,19 @@ void MainWindow::on_actionOpen_Image_triggered()
     ui->graphicsView->setScene(scene);
     ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
     //ui->graphicsView->repaint();
+
+    //Enable Menu Options
+    ui->actionSave_Image->setEnabled(true);
+    ui->actionEnable_Auto_Save->setEnabled(true);
+    ui->actionUndo->setEnabled(true);
+    ui->actionRedo->setEnabled(true);
+    ui->menuMasks->setEnabled(true);
+    ui->menuMathematical_Morphology->setEnabled(true);
+    ui->menuFilters->setEnabled(true);
+    ui->actionMethod_Input->setEnabled(true);
+    ui->menuF_Measure->setEnabled(true);
+    ui->menuAdd_Noise->setEnabled(true);
+    ui->actionMore->setEnabled(true);
 
 }
 
@@ -84,11 +106,24 @@ void MainWindow::on_actionSave_Image_triggered()
 void MainWindow::on_actionEnable_Auto_Save_triggered()
 {
     QMessageBox::information(this,"Auto Save","Auto Save Enabled");
+    ui->actionEnable_Auto_Save->setEnabled(false);
+    ui->actionDisable_Auto_Save->setEnabled(true);
+    auto_save_enable = true;
+    stage_num = 0;
+}
+
+void MainWindow::auto_save_Function()
+{
+    imageObject->save(file_path+"/"+file_name+"_stage"+QString(stage_num));
+    stage_num++;
 }
 
 void MainWindow::on_actionDisable_Auto_Save_triggered()
 {
     QMessageBox::information(this,"Auto Save","Auto Save Disabled");
+    ui->actionEnable_Auto_Save->setEnabled(true);
+    ui->actionDisable_Auto_Save->setEnabled(false);
+    auto_save_enable = false;
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -1031,10 +1066,10 @@ void MainWindow::on_actionShrink_Filter_triggered()
 
 void MainWindow::on_actionUndo_triggered()
 {
-
+    stage_num--;
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
-
+    stage_num++;
 }
