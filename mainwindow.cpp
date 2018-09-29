@@ -185,7 +185,70 @@ void MainWindow::on_actionGasussian_Noise_triggered()
 
 void MainWindow::on_actionRandom_Noise_triggered()
 {
-    QMessageBox::information(this,"Random","Add Random Noise");
+  //QMessageBox::information(this,"Random","Add Random Noise");
+  int x,y;
+  for (int i=0;i<100000;i++)
+  {
+    x = (long(rand())*(Ix-2))/32767+1;
+    y = (long(rand())*(Iy-2))/32767+1;
+    imageObject->setPixel(x,y,1);
+  }
+
+  // Form4->ImagXpress7_1->DIBUpdate();
+
+  // unsigned char *I;
+
+  // if ((I = (unsigned char *)malloc(Ix*Iy))==NULL)
+  // {
+  //   QMessageBox::alert(this,"Alert","memory problem");return;
+  // }
+
+  // // Form5->ProgressBar1->Max = Ix-1;
+  // // Form5->Show();
+
+  // for (int x=0;x<Ix;x++)
+  // {
+  //   // Form5->ProgressBar1->Position = x;
+  //   for (int y=0;y<Iy;y++)
+  //   *(I+y*Ix+x) = imageObject->getPixel(x,y);
+  // }
+  // Form4->ImagXpress7_2->hDIB = Form4->ImagXpress7_1->CopyDIB();
+
+  // // Form5->ProgressBar1->Max = Ix-1;
+
+  // for (int x=0;x<Ix;x++)
+  // {
+  //   // Form5->ProgressBar1->Position = x;
+  //   for (int y=0;y<Iy;y++)
+  //   {
+  //      if (*(I+y*Ix+x)==0)
+  //      {
+  //        int c=0;
+  //        for (int ix=x-3;ix<=x+3;ix++)
+  //        for (int iy=y-3;iy<=y+3;iy++)
+  //        {
+  //          if ((ix>=0) && (ix<Ix) && (iy>=0) && (iy<Iy))
+  //          if (*(I+iy*Ix+ix)==255)
+  //            c++;
+  //        }
+  //        if (c>34)
+  //        {
+  //          Form4->ImagXpress7_2->DIBSetPixel(x,y,255);
+  //        }
+  //      }
+  //   }
+  // }
+  // // Form5->Close();
+  // Form4->ImagXpress7_2->DIBUpdate();
+  // free(I);
+  update();
+  image = QPixmap::fromImage(*imageObject);
+  if(scene==NULL) scene = new QGraphicsScene(this);
+  scene->addPixmap(image);
+  scene->setSceneRect(image.rect());
+  ui->graphicsView->setScene(scene);
+  ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+  ui->graphicsView->repaint();
 }
 
 void MainWindow::on_actionAll_White_triggered()
