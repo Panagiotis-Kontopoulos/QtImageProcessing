@@ -74,7 +74,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QPixmap image, original_image;
-    QImage  *imageObject;
+    QImage  *imageObject, *original_imageObject;
     QString file_path, file_name;
     int Ix,Iy;
     float mean, deviation;

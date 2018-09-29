@@ -41,7 +41,9 @@ void MainWindow::on_actionOpen_Image_triggered()
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
     *imageObject = imageReader.read();
+    *original_imageObject = imageObject->copy();
     image = QPixmap::fromImage(*imageObject);
+    original_image = QPixmap::fromImage(*original_imageObject);
 
 
     Ix = image.width();
@@ -370,11 +372,85 @@ void MainWindow::on_actionAll_Black_2_triggered()
 
 void MainWindow::on_actionComparison_triggered()
 {
+    QString file_url = QFileDialog::getOpenFileName(this,tr("Open Image File"),QDir::currentPath(),tr("*.tiff"));
+    QFileInfo fileInfo(file_url);
+    file_path = fileInfo.path();
+    file_name = fileInfo.fileName();
+    QMessageBox::information(this,file_name,file_name);
+    QMessageBox::information(this,file_path,file_path);
+    QMessageBox::information(this,file_url,file_url);
+    QImage  *comparison_imageObject = new QImage;
+    QImageReader imageReader(file_url);
+    imageReader.setDecideFormatFromContent(true);
+    *comparison_imageObject = imageReader.read();
+    QPixmap comparison_image = QPixmap::fromImage(*comparison_imageObject);
 
+
+    int IxC = image.width();
+    int IyC = image.height();
+
+    float CTP=0,CFP=0,CFN=0; //Counter True Positive, Counter False Positive, Counter False Negative
+    int error=0;
+    if (Ix>IxC || Iy>IyC)
+    {
+       //ShowMessage("Images have different size");
+       error=1;
+    }
+    float RC=0,PR=0,FM=0; //Anakthsh, Akribeia, F-Measure
+    for (int x=1;x<Ix-1;x++)
+    {
+        for (int y=1;y<Iy-1;y++)
+         {
+            if (imageObject->pixelIndex(x,y)==1 && comparison_imageObject->pixelIndex(x,y)==1)CTP=CTP+1;
+            if (imageObject->pixelIndex(x,y)==1 && comparison_imageObject->pixelIndex(x,y)==0)CFP=CFP+1;
+            if (imageObject->pixelIndex(x,y)==0 && comparison_imageObject->pixelIndex(x,y)==1)CFN=CFN+1;
+         }
+         if (error)break;
+      }
+      if (!error)
+      {
+
+        RC=CTP/(CFN+CTP);
+        PR=CTP/(CFP+CTP);
+        FM=((2*RC*PR/(RC+PR))*100); // FM=(((2*RC*PR)/(RC+PR))*100)/100;
+        QString str = QT_STRINGIFY(FM);
+        //ShowMessage("Similarity : "+str+" %");
+      }
 }
 
 void MainWindow::on_actionEvaluation_triggered()
 {
+
+
+    float CTP=0,CFP=0,CFN=0; //Counter True Positive, Counter False Positive, Counter False Negative
+    int error=0;
+    float RC=0,PR=0,FM=0; //Anakthsh, Akribeia, F-Measure
+    for (int x=1;x<Ix-1;x++)
+    {
+        for (int y=1;y<Iy-1;y++)
+         {
+            if (x>Ix || y>Iy)
+            {
+               //ShowMessage("Images have different size");
+               error=1;
+               break;
+            }
+            if (imageObject->pixelIndex(x,y)==1 && original_imageObject->pixelIndex(x,y)==1)CTP=CTP+1;
+            if (imageObject->pixelIndex(x,y)==1 && original_imageObject->pixelIndex(x,y)==0)CFP=CFP+1;
+            if (imageObject->pixelIndex(x,y)==0 && original_imageObject->pixelIndex(x,y)==1)CFN=CFN+1;
+         }
+         if (error)break;
+      }
+      if (!error)
+      {
+
+        RC=CTP/(CFN+CTP);
+        PR=CTP/(CFP+CTP);
+        FM=((2*RC*PR/(RC+PR))*100); // FM=(((2*RC*PR)/(RC+PR))*100)/100;
+        QString str = QT_STRINGIFY(FM);
+        //ShowMessage("Similarity : "+str+" %");
+        //Form1->Caption = "Document Improved : "+str+" %";
+      }
 
 }
 
