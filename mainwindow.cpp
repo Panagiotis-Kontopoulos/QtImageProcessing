@@ -147,16 +147,16 @@ void MainWindow::on_actionMore_triggered()
 void MainWindow::on_actionGasussian_Noise_triggered()
 {
     QMessageBox::information(this,"Gaussian","Add Gaussian Noise");
-    deviation = 1.0f;
-    mean = 2.0f;
+    double deviation = 1.0;
+    double mean = 2.0;
     std::cout<<"Adding Noise";
     //Add Gaussian Noise to the Image
-    float pi = 3.14159265359f;
-    float e = 2.718f;
-    float prob = 0.0, min=1000,max=0;
-    float** temp=new float*[Ix];
+    double pi = 3.14159265359;
+    double e = 2.718;
+    double prob = 0.0, min=1000,max=0;
+    double** temp=new double*[Ix];
     for (int x=0;x<Ix;x++)
-        temp[x]=new float[Iy];
+        temp[x]=new double[Iy];
     // Form7->ShowModal();
 
     // ImagXpress7_1->SaveToBuffer = true;
@@ -180,7 +180,7 @@ void MainWindow::on_actionGasussian_Noise_triggered()
         // Form5->ProgressBar1->Position = x;
         for (int y=0;y<Iy;y++)
         {
-            prob = (1.0f/deviation*sqrt(2.0f*pi))*pow(e,(0-1)*(pow((long(rand())*(255-0)/32767+1)-mean,2)/(2*pow(deviation,2))));
+            prob = (1.0/deviation*sqrt(2.0*pi))*pow(e,(-1.0)*(pow((long(rand())*(255-0)/32767+1)-mean,2)/(2*pow(deviation,2))));
             temp[x][y]=prob;
             if (prob > max)max=prob;
             if (prob < min)min=prob;
