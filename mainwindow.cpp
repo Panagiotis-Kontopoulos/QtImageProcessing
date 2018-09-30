@@ -920,11 +920,11 @@ void MainWindow::on_actionSwell_Filter_triggered()
     QFormLayout form(&dialog);
 
     // Add the lineEdits with their respective labels
-    QList<QAbstractSpinBox *> fields;
+    QList<QSpinBox *> fields;
     QSpinBox *ws = new QSpinBox(&dialog);
     ws->setValue(10);
-    QDoubleSpinBox *wt = new QDoubleSpinBox(&dialog);
-    wt->setValue(1.0);
+    QSpinBox *wt = new QSpinBox(&dialog);
+    wt->setValue(1);
 
     form.addRow("Window Size", ws);
     form.addRow("W Threshhold", wt);
@@ -939,12 +939,11 @@ void MainWindow::on_actionSwell_Filter_triggered()
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
-    int windowsize;
-    double ksw;
+    int windowsize, ksw;
 
     if (dialog.exec() == QDialog::Accepted) {
-        windowsize = QSpinBox(fields[0]).value();
-        ksw = QDoubleSpinBox(fields[1]).value();
+        windowsize = fields[0]->value();
+        ksw = fields[1]->value();
 
 //        int maxnumofpixels=windowsize*windowsize;
         int** temp=new int*[Ix];
@@ -1009,10 +1008,10 @@ void MainWindow::on_actionShrink_Filter_triggered()
     QFormLayout form(&dialog);
 
     // Add the lineEdits with their respective labels
-    QList<QAbstractSpinBox *> fields;
+    QList<QSpinBox *> fields;
     QSpinBox *ws = new QSpinBox(&dialog);
     ws->setValue(10);
-    QDoubleSpinBox *ht = new QDoubleSpinBox(&dialog);
+    QSpinBox *ht = new QSpinBox(&dialog);
     ht->setValue(1.0);
 
     form.addRow("Window Size", ws);
@@ -1028,12 +1027,11 @@ void MainWindow::on_actionShrink_Filter_triggered()
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
-    int windowsize;
-    double ksh;
+    int windowsize, ksh;
 
     if (dialog.exec() == QDialog::Accepted) {
-        windowsize = QSpinBox(fields[0]).value();
-        ksh = QDoubleSpinBox(fields[1]).value();
+        windowsize = fields[0]->value();
+        ksh = fields[1]->value();
 
         int** temp=new int*[Ix];
         for (int x=0;x<Ix;x++)
