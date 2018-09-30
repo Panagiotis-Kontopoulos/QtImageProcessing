@@ -84,8 +84,6 @@ void MainWindow::on_actionOpen_Image_triggered()
     //Enable Menu Options
     ui->actionSave_Image->setEnabled(true);
     ui->actionEnable_Auto_Save->setEnabled(true);
-    ui->actionUndo->setEnabled(true);
-    ui->actionRedo->setEnabled(true);
     ui->menuMasks->setEnabled(true);
     ui->menuMathematical_Morphology->setEnabled(true);
     ui->menuFilters->setEnabled(true);
@@ -110,12 +108,16 @@ void MainWindow::on_actionEnable_Auto_Save_triggered()
     ui->actionDisable_Auto_Save->setEnabled(true);
     auto_save_enable = true;
     stage_num = 0;
+    total_stages = 0;
 }
 
 void MainWindow::auto_save_Function()
 {
-    imageObject->save(file_path+"/"+file_name+"_stage"+QString(stage_num));
+    imageObject->save(file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    QMessageBox::information(this,"Auto Save",file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    ui->actionUndo->setEnabled(true);
     stage_num++;
+    total_stages++;
 }
 
 void MainWindow::on_actionDisable_Auto_Save_triggered()
@@ -209,13 +211,22 @@ void MainWindow::on_actionMethod_Input_triggered()
             QStringList parts = text.split(" ");
             if (!parts[0].compare("Swell-Filter"))
             {
-                int
+                windowsize = parts[1].toInt();
+                ksw = parts[2].toInt();
+                from_input_method = true;
+                ui->actionSwell_Filter->trigger();
+                from_input_method = false;
             }
             else if (!parts[0].compare("Shrink-Filter"))
             {
-
+                windowsize = parts[1].toInt();
+                ksh = parts[2].toInt();
+                from_input_method = true;
+                ui->actionShrink_Filter->trigger();
+                from_input_method = false;
             }
-            QMessageBox::warning(this,"Warning","Unknown Command");
+            else
+                QMessageBox::warning(this,"Warning","Unknown Command");
         }
     }
     file.close();
@@ -899,6 +910,10 @@ void MainWindow::on_actionRhombus_5x5_2_triggered()
 void MainWindow::on_actionSwell_Filter_triggered()
 {
     //Swell Filter
+    if (!from_input_method)
+    {
+
+
     QDialog dialog(this);
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
@@ -923,11 +938,14 @@ void MainWindow::on_actionSwell_Filter_triggered()
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
-    int windowsize, ksw;
 
     if (dialog.exec() == QDialog::Accepted) {
         windowsize = fields[0]->value();
         ksw = fields[1]->value();
+    }
+    else
+        return;
+    }
 
 //        int maxnumofpixels=windowsize*windowsize;
         int** temp=new int*[Ix];
@@ -974,12 +992,13 @@ void MainWindow::on_actionSwell_Filter_triggered()
         repaintImage();
         for (int x=0;x<Ix;x++)free(temp[x]);
         free(temp);
-    }
 }
 
 void MainWindow::on_actionShrink_Filter_triggered()
 {
     //Shrink Filter
+    if (!from_input_method)
+    {
     QDialog dialog(this);
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
@@ -1004,11 +1023,14 @@ void MainWindow::on_actionShrink_Filter_triggered()
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
-    int windowsize, ksh;
 
     if (dialog.exec() == QDialog::Accepted) {
         windowsize = fields[0]->value();
         ksh = fields[1]->value();
+    }
+    else
+        return;
+}
 
         int** temp=new int*[Ix];
         for (int x=0;x<Ix;x++)
@@ -1056,21 +1078,47 @@ void MainWindow::on_actionShrink_Filter_triggered()
         repaintImage();
         for (int x=0;x<Ix;x++)free(temp[x]);
         free(temp);
-    }
 }
 
 void MainWindow::on_actionUndo_triggered()
 {
+    if (stage_num==0){
+        ui->actionUndo->setEnabled(false);
+        return;
+    }
     stage_num--;
+    ui->actionRedo->setEnabled(true);
+    QString file_url(file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    QFileInfo fileInfo(file_url);
+    QImageReader imageReader(file_url);
+    imageReader.setDecideFormatFromContent(true);
+    *imageObject = imageReader.read();
+    qDebug()<<"Image Read";
+    repaintImage();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
+    if (stage_num==total_stages){
+        ui->actionRedo->setEnabled(false);
+        return;
+    }
     stage_num++;
+    ui->actionUndo->setEnabled(true);
+    QString file_url(file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    QFileInfo fileInfo(file_url);
+    QImageReader imageReader(file_url);
+    imageReader.setDecideFormatFromContent(true);
+    *imageObject = imageReader.read();
+    qDebug()<<"Image Read";
+    repaintImage();
 }
 
 void MainWindow::repaintImage()
 {
+    if (auto_save_enable){
+        auto_save_Function();
+    }
     update();
     image = QPixmap::fromImage(*imageObject);
     if(scene==nullptr) scene = new QGraphicsScene(this);
