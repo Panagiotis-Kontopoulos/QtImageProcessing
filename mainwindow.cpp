@@ -14,6 +14,8 @@
 #include <QDialog>
 #include <QFormLayout>
 #include <QLineEdit>
+#include <QAbstractSpinBox>
+#include <QDoubleSpinBox>
 #include <QSpinBox>
 #include <QDialogButtonBox>
 #include <QDebug>
@@ -38,9 +40,9 @@ void MainWindow::on_actionOpen_Image_triggered()
     QFileInfo fileInfo(file_url);
     file_path = fileInfo.path();
     file_name = fileInfo.fileName();
-    QMessageBox::information(this,file_name,file_name);
-    QMessageBox::information(this,file_path,file_path);
-    QMessageBox::information(this,file_url,file_url);
+//    QMessageBox::information(this,file_name,file_name);
+//    QMessageBox::information(this,file_path,file_path);
+//    QMessageBox::information(this,file_url,file_url);
     imageObject = new QImage;
     original_imageObject = new QImage;
     QImageReader imageReader(file_url);
@@ -918,20 +920,16 @@ void MainWindow::on_actionSwell_Filter_triggered()
     QFormLayout form(&dialog);
 
     // Add the lineEdits with their respective labels
-    QList<QSpinBox *> fields;
+    QList<QAbstractSpinBox *> fields;
     QSpinBox *ws = new QSpinBox(&dialog);
     ws->setValue(10);
-    QSpinBox *ht = new QSpinBox(&dialog);
-    ht->setValue(1);
-    QSpinBox *wt = new QSpinBox(&dialog);
-    wt->setValue(1);
+    QDoubleSpinBox *wt = new QDoubleSpinBox(&dialog);
+    wt->setValue(1.0);
 
     form.addRow("Window Size", ws);
-    form.addRow("W Threshhold", ht);
-    form.addRow("H Threshhold",wt);
+    form.addRow("W Threshhold", wt);
 
     fields << ws;
-    fields << ht;
     fields << wt;
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
@@ -941,14 +939,14 @@ void MainWindow::on_actionSwell_Filter_triggered()
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
-    int windowsize,ksw,ksh;
+    int windowsize;
+    double ksw;
 
     if (dialog.exec() == QDialog::Accepted) {
-        windowsize = fields[0]->value();
-        ksw = fields[1]->value();
-        ksh = fields[2]->value();
+        windowsize = QSpinBox(fields[0]).value();
+        ksw = QDoubleSpinBox(fields[1]).value();
 
-        int maxnumofpixels=windowsize*windowsize;
+//        int maxnumofpixels=windowsize*windowsize;
         int** temp=new int*[Ix];
         for (int x=0;x<Ix;x++)
             temp[x]=new int[Iy];
@@ -1006,62 +1004,91 @@ void MainWindow::on_actionSwell_Filter_triggered()
 void MainWindow::on_actionShrink_Filter_triggered()
 {
     //Shrink Filter
-    int** temp=new int*[Ix];
-    for (int x=0;x<Ix;x++)
-        temp[x]=new int[Iy];
+    QDialog dialog(this);
+    // Use a layout allowing to have a label next to each field
+    QFormLayout form(&dialog);
 
-    int windowsize = 10; //Must be given from user
-    int ksw = 1; //Must be given by user, W Threshhold
-    int ksh = 1; //Must be given by user, H Threshhold
-    int maxnumofpixels=windowsize*windowsize;
-    int white=0;
-    for (int y=windowsize;y<Iy-windowsize;y++)
-    {
+    // Add the lineEdits with their respective labels
+    QList<QAbstractSpinBox *> fields;
+    QSpinBox *ws = new QSpinBox(&dialog);
+    ws->setValue(10);
+    QDoubleSpinBox *ht = new QDoubleSpinBox(&dialog);
+    ht->setValue(1.0);
 
-        for (int x=windowsize;x<Ix-windowsize;x++)
+    form.addRow("Window Size", ws);
+    form.addRow("H Threshhold",ht);
+
+    fields << ws;
+    fields << ht;
+
+    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    int windowsize;
+    double ksh;
+
+    if (dialog.exec() == QDialog::Accepted) {
+        windowsize = QSpinBox(fields[0]).value();
+        ksh = QDoubleSpinBox(fields[1]).value();
+
+        int** temp=new int*[Ix];
+        for (int x=0;x<Ix;x++)
+            temp[x]=new int[Iy];
+
+//        int maxnumofpixels=windowsize*windowsize;
+        int white=0;
+        for (int y=windowsize;y<Iy-windowsize;y++)
         {
-            int y1=y-((windowsize-1)/2);
-            if (y1<0)y1=0;
-            int maxy=y+((windowsize-1)/2);
-            if (maxy>Iy)maxy=Iy;
-            white=0;
-            while (y1<maxy)
+
+            for (int x=windowsize;x<Ix-windowsize;x++)
             {
-                int x1=x-((windowsize-1)/2);
-                if (x1<0)x1=0;
-                int maxx=x+((windowsize-1)/2);
-                if (maxx>Ix)maxx=Ix;
-                while (x1<maxx)
+                int y1=y-((windowsize-1)/2);
+                if (y1<0)y1=0;
+                int maxy=y+((windowsize-1)/2);
+                if (maxy>Iy)maxy=Iy;
+                white=0;
+                while (y1<maxy)
                 {
-                    if (imageObject->pixelIndex(x1,y1)==0 && x1!=x && y1!=y)
+                    int x1=x-((windowsize-1)/2);
+                    if (x1<0)x1=0;
+                    int maxx=x+((windowsize-1)/2);
+                    if (maxx>Ix)maxx=Ix;
+                    while (x1<maxx)
                     {
-                        white++;
+                        if (imageObject->pixelIndex(x1,y1)==0 && x1!=x && y1!=y)
+                        {
+                            white++;
+                        }
+                        x1++;
                     }
-                    x1++;
+                    y1++;
                 }
-                y1++;
+                if (white>ksh)temp[x][y]=2;
             }
-            if (white>ksh)temp[x][y]=2;
         }
-    }
 
-    for (int x=0;x<Ix;x++)
-    {
-        for (int y=0;y<Iy;y++)
+        for (int x=0;x<Ix;x++)
         {
-            if (temp[x][y]==2)imageObject->setPixel(x,y,0);
+            for (int y=0;y<Iy;y++)
+            {
+                if (temp[x][y]==2)imageObject->setPixel(x,y,0);
+            }
         }
+        update();
+        image = QPixmap::fromImage(*imageObject);
+        if(scene==nullptr) scene = new QGraphicsScene(this);
+        scene->addPixmap(image);
+        scene->setSceneRect(image.rect());
+        ui->graphicsView->setScene(scene);
+        ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+        ui->graphicsView->repaint();
+        for (int x=0;x<Ix;x++)free(temp[x]);
+        free(temp);
     }
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
-    for (int x=0;x<Ix;x++)free(temp[x]);
-    free(temp);
 }
 
 void MainWindow::on_actionUndo_triggered()
