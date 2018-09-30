@@ -239,9 +239,36 @@ void MainWindow::on_actionMore_triggered()
 
 void MainWindow::on_actionGasussian_Noise_triggered()
 {
-    QMessageBox::information(this,"Gaussian","Add Gaussian Noise");
-    double deviation = 1.0;
-    double mean = 2.0;
+    QDialog dialog(this);
+    // Use a layout allowing to have a label next to each field
+    QFormLayout form(&dialog);
+
+    // Add the lineEdits with their respective labels
+    QList<QDoubleSpinBox *> fields;
+    QDoubleSpinBox *ws = new QDoubleSpinBox(&dialog);
+    ws->setValue(1.0);
+    QDoubleSpinBox *wt = new QDoubleSpinBox(&dialog);
+    wt->setValue(2.0);
+
+    form.addRow("Deviation", ws);
+    form.addRow("Mean", wt);
+
+    fields << ws;
+    fields << wt;
+
+    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+
+    if (dialog.exec() == QDialog::Accepted) {
+        deviation = fields[0]->value();
+        mean = fields[1]->value();
+    }
+
     std::cout<<"Adding Noise";
     //Add Gaussian Noise to the Image
     double pi = 3.14159265359;
