@@ -107,14 +107,23 @@ void MainWindow::on_actionEnable_Auto_Save_triggered()
     ui->actionEnable_Auto_Save->setEnabled(false);
     ui->actionDisable_Auto_Save->setEnabled(true);
     auto_save_enable = true;
-    stage_num = 0;
-    total_stages = 0;
+    stage_num = -1;
+    total_stages = -1;
+    auto_save_Function();
+    stage_num++;
+    total_stages++;
 }
 
 void MainWindow::auto_save_Function()
 {
-    imageObject->save(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
-    QMessageBox::information(this,"Auto Save",file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    if (stage_num<0){
+        imageObject->save(file_path+"/stage0"+"_"+file_name);
+        QMessageBox::information(this,"Auto Save",file_path+"/stage0"+"_"+file_name);
+    }
+    else{
+        imageObject->save(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
+        QMessageBox::information(this,"Auto Save",file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    }
     ui->actionUndo->setEnabled(true);
     stage_num++;
     total_stages++;
