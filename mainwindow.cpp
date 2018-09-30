@@ -17,8 +17,8 @@
 #include <QSpinBox>
 #include <QDialogButtonBox>
 #include <QDebug>
+#include <QTextStream>
 #include "OddSpinBox.h"
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -135,6 +135,90 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionMethod_Input_triggered()
 {
     QMessageBox::information(this,"Input","Input Methods");
+    QString file_url = QFileDialog::getOpenFileName(this,tr("Open txt File"),QDir::currentPath(),tr("*.txt"));
+    QFileInfo fileInfo(file_url);
+    QFile file(file_url);
+    if (!file.open(QFile::ReadWrite | QFile::Text))
+    {
+        QMessageBox::warning(this,"Error on Load","Error loading file "+file_url);
+        return;
+    }
+    QTextStream in(&file);
+    while (!in.atEnd())
+    {
+        QString text = in.readLine();
+        if (!text.compare("Mask 4x4 white"))
+        {
+            QMessageBox::information(this,"Success","Mask 4x4 white");
+            ui->actionAll_White->trigger();
+        }
+        else if (!text.compare("Mask 4x4 black"))
+        {
+            ui->actionAll_Black->trigger();
+        }
+        else if (!text.compare("Mask 8x8 white"))
+        {
+            ui->actionAll_White_2->trigger();
+        }
+        else if (!text.compare("Mask 8x8 black"))
+        {
+            ui->actionAll_Black_2->trigger();
+        }
+        else if (!text.compare("Dilation All 3x3"))
+        {
+            ui->actionAll_3x3->trigger();
+        }
+        else if (!text.compare("Dilation Cross 3x3"))
+        {
+            ui->actionCross_3x3->trigger();
+        }
+        else if (!text.compare("Dilation All 5x5"))
+        {
+            ui->actionAll_5x5->trigger();
+        }
+        else if (!text.compare("Dilation Rhombus 5x5"))
+        {
+            ui->actionRhombus_5x5->trigger();
+        }
+        else if (!text.compare("Erosion All 3x3"))
+        {
+            ui->actionAll_3x3_2->trigger();
+        }
+        else if (!text.compare("Erosion Cross 3x3"))
+        {
+            ui->actionCross_3x3_2->trigger();
+        }
+        else if (!text.compare("Erosion All 5x5"))
+        {
+            ui->actionAll_5x5_2->trigger();
+        }
+        else if (!text.compare("Erosion Rhombus 5x5"))
+        {
+            ui->actionRhombus_5x5_2->trigger();
+        }
+        else if (!text.compare("Swell-Filter"))
+        {
+            ui->actionSwell_Filter->trigger();
+        }
+        else if (!text.compare("Shrink-Filter"))
+        {
+            ui->actionShrink_Filter->trigger();
+        }
+        else
+        {
+            QStringList parts = text.split(" ");
+            if (!parts[0].compare("Swell-Filter"))
+            {
+                int
+            }
+            else if (!parts[0].compare("Shrink-Filter"))
+            {
+
+            }
+            QMessageBox::warning(this,"Warning","Unknown Command");
+        }
+    }
+    file.close();
 }
 
 void MainWindow::on_actionMore_triggered()
