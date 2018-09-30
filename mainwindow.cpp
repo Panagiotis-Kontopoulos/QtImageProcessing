@@ -145,12 +145,12 @@ void MainWindow::on_actionMore_triggered()
 void MainWindow::on_actionGasussian_Noise_triggered()
 {
     QMessageBox::information(this,"Gaussian","Add Gaussian Noise");
-    deviation = 1;
-    mean = 2;
+    deviation = 1.0f;
+    mean = 2.0f;
     std::cout<<"Adding Noise";
     //Add Gaussian Noise to the Image
-    float pi = 3.14159265359;
-    float e = 2.718;
+    float pi = 3.14159265359f;
+    float e = 2.718f;
     float prob = 0.0, min=1000,max=0;
     float** temp=new float*[Ix];
     for (int x=0;x<Ix;x++)
@@ -178,7 +178,7 @@ void MainWindow::on_actionGasussian_Noise_triggered()
         // Form5->ProgressBar1->Position = x;
         for (int y=0;y<Iy;y++)
         {
-            prob = (1/deviation*sqrt(2*pi))*pow(e,(0-1)*(pow(((long)rand()*(255-0)/32767+1)-mean,2)/(2*pow(deviation,2))));
+            prob = (1.0f/deviation*sqrt(2.0f*pi))*pow(e,(0-1)*(pow((long(rand())*(255-0)/32767+1)-mean,2)/(2*pow(deviation,2))));
             temp[x][y]=prob;
             if (prob > max)max=prob;
             if (prob < min)min=prob;
@@ -217,7 +217,7 @@ void MainWindow::on_actionGasussian_Noise_triggered()
     //        ui->image_label->repaint();
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -285,7 +285,7 @@ void MainWindow::on_actionRandom_Noise_triggered()
     // free(I);
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -312,7 +312,7 @@ void MainWindow::on_actionAll_White_triggered()
     }
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -339,7 +339,7 @@ void MainWindow::on_actionAll_Black_triggered()
     }
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -368,7 +368,7 @@ void MainWindow::on_actionAll_White_2_triggered()
     }
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -397,7 +397,7 @@ void MainWindow::on_actionAll_Black_2_triggered()
     }
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -527,7 +527,7 @@ void MainWindow::on_actionAll_3x3_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -568,7 +568,7 @@ void MainWindow::on_actionCross_3x3_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -634,7 +634,7 @@ void MainWindow::on_actionAll_5x5_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -688,7 +688,7 @@ void MainWindow::on_actionRhombus_5x5_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -737,7 +737,7 @@ void MainWindow::on_actionAll_3x3_2_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -778,7 +778,7 @@ void MainWindow::on_actionCross_3x3_2_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -844,7 +844,7 @@ void MainWindow::on_actionAll_5x5_2_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -899,7 +899,7 @@ void MainWindow::on_actionRhombus_5x5_2_triggered()
 
     update();
     image = QPixmap::fromImage(*imageObject);
-    if(scene==NULL) scene = new QGraphicsScene(this);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
@@ -992,7 +992,7 @@ void MainWindow::on_actionSwell_Filter_triggered()
         }
         update();
         image = QPixmap::fromImage(*imageObject);
-        if(scene==NULL) scene = new QGraphicsScene(this);
+        if(scene==nullptr) scene = new QGraphicsScene(this);
         scene->addPixmap(image);
         scene->setSceneRect(image.rect());
         ui->graphicsView->setScene(scene);
