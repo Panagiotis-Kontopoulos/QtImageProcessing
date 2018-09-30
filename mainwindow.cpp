@@ -113,7 +113,7 @@ void MainWindow::on_actionEnable_Auto_Save_triggered()
 
 void MainWindow::auto_save_Function()
 {
-    imageObject->save(file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    imageObject->save(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
     QMessageBox::information(this,"Auto Save",file_path+"/stage"+QString(stage_num)+"_"+file_name);
     ui->actionUndo->setEnabled(true);
     stage_num++;
@@ -1088,7 +1088,7 @@ void MainWindow::on_actionUndo_triggered()
     }
     stage_num--;
     ui->actionRedo->setEnabled(true);
-    QString file_url(file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    QString file_url(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
     QFileInfo fileInfo(file_url);
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
@@ -1105,7 +1105,7 @@ void MainWindow::on_actionRedo_triggered()
     }
     stage_num++;
     ui->actionUndo->setEnabled(true);
-    QString file_url(file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    QString file_url(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
     QFileInfo fileInfo(file_url);
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
