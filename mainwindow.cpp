@@ -17,7 +17,7 @@
 #include <QSpinBox>
 #include <QDialogButtonBox>
 #include <QDebug>
-
+#include "OddSpinBox.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -821,8 +821,8 @@ void MainWindow::on_actionSwell_Filter_triggered()
 
     // Add the lineEdits with their respective labels
     QList<QSpinBox *> fields;
-    QSpinBox *ws = new QSpinBox(&dialog);
-    ws->setValue(10);
+    OddSpinBox *ws = new OddSpinBox(&dialog);
+    ws->setValue(9);
     QSpinBox *wt = new QSpinBox(&dialog);
     wt->setValue(1);
 
@@ -902,8 +902,8 @@ void MainWindow::on_actionShrink_Filter_triggered()
 
     // Add the lineEdits with their respective labels
     QList<QSpinBox *> fields;
-    QSpinBox *ws = new QSpinBox(&dialog);
-    ws->setValue(10);
+    OddSpinBox *ws = new OddSpinBox(&dialog);
+    ws->setValue(9);
     QSpinBox *ht = new QSpinBox(&dialog);
     ht->setValue(1.0);
 

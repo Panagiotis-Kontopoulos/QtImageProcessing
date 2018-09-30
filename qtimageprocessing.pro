@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    oddspinbox.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    oddspinbox.h
 
 FORMS += \
         mainwindow.ui
