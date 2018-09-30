@@ -14,8 +14,6 @@
 #include <QDialog>
 #include <QFormLayout>
 #include <QLineEdit>
-#include <QAbstractSpinBox>
-#include <QDoubleSpinBox>
 #include <QSpinBox>
 #include <QDialogButtonBox>
 #include <QDebug>
@@ -217,14 +215,7 @@ void MainWindow::on_actionGasussian_Noise_triggered()
     //        image = QPixmap::fromImage(*imageObject);
     //        ui->image_label->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
     //        ui->image_label->repaint();
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
 }
 
 void MainWindow::on_actionRandom_Noise_triggered()
@@ -285,14 +276,7 @@ void MainWindow::on_actionRandom_Noise_triggered()
     // // Form5->Close();
     // Form4->ImagXpress7_2->DIBUpdate();
     // free(I);
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
 }
 
 void MainWindow::on_actionAll_White_triggered()
@@ -312,14 +296,7 @@ void MainWindow::on_actionAll_White_triggered()
             //            std::cout<<current_pixel_color;
         }
     }
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
 }
 
 void MainWindow::on_actionAll_Black_triggered()
@@ -339,14 +316,7 @@ void MainWindow::on_actionAll_Black_triggered()
             //            std::cout<<current_pixel_color;
         }
     }
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
 }
 
 void MainWindow::on_actionAll_White_2_triggered()
@@ -368,14 +338,7 @@ void MainWindow::on_actionAll_White_2_triggered()
             //            std::cout<<current_pixel_color;
         }
     }
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
 }
 
 void MainWindow::on_actionAll_Black_2_triggered()
@@ -397,14 +360,7 @@ void MainWindow::on_actionAll_Black_2_triggered()
             //            std::cout<<current_pixel_color;
         }
     }
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
 }
 
 void MainWindow::on_actionComparison_triggered()
@@ -527,14 +483,7 @@ void MainWindow::on_actionAll_3x3_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)free(temp[x]);
     free(temp);
 }
@@ -568,14 +517,7 @@ void MainWindow::on_actionCross_3x3_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)free(temp[x]);
     free(temp);
 }
@@ -634,14 +576,7 @@ void MainWindow::on_actionAll_5x5_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)free(temp[x]);
     free(temp);
 }
@@ -688,14 +623,7 @@ void MainWindow::on_actionRhombus_5x5_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)
         free(temp[x]);
     free(temp);
@@ -737,14 +665,7 @@ void MainWindow::on_actionAll_3x3_2_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)free(temp[x]);
     free(temp);
 }
@@ -778,14 +699,7 @@ void MainWindow::on_actionCross_3x3_2_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)free(temp[x]);
     free(temp);
 }
@@ -844,14 +758,7 @@ void MainWindow::on_actionAll_5x5_2_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)free(temp[x]);
     free(temp);
 }
@@ -899,14 +806,7 @@ void MainWindow::on_actionRhombus_5x5_2_triggered()
         }
     }
 
-    update();
-    image = QPixmap::fromImage(*imageObject);
-    if(scene==nullptr) scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->repaint();
+    repaintImage();
     for (int x=0;x<Ix;x++)
         free(temp[x]);
     free(temp);
@@ -987,14 +887,7 @@ void MainWindow::on_actionSwell_Filter_triggered()
                 if (temp[x][y]==2)imageObject->setPixel(x,y,1);
             }
         }
-        update();
-        image = QPixmap::fromImage(*imageObject);
-        if(scene==nullptr) scene = new QGraphicsScene(this);
-        scene->addPixmap(image);
-        scene->setSceneRect(image.rect());
-        ui->graphicsView->setScene(scene);
-        ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-        ui->graphicsView->repaint();
+        repaintImage();
         for (int x=0;x<Ix;x++)free(temp[x]);
         free(temp);
     }
@@ -1076,14 +969,7 @@ void MainWindow::on_actionShrink_Filter_triggered()
                 if (temp[x][y]==2)imageObject->setPixel(x,y,0);
             }
         }
-        update();
-        image = QPixmap::fromImage(*imageObject);
-        if(scene==nullptr) scene = new QGraphicsScene(this);
-        scene->addPixmap(image);
-        scene->setSceneRect(image.rect());
-        ui->graphicsView->setScene(scene);
-        ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-        ui->graphicsView->repaint();
+        repaintImage();
         for (int x=0;x<Ix;x++)free(temp[x]);
         free(temp);
     }
@@ -1097,4 +983,16 @@ void MainWindow::on_actionUndo_triggered()
 void MainWindow::on_actionRedo_triggered()
 {
     stage_num++;
+}
+
+void MainWindow::repaintImage()
+{
+    update();
+    image = QPixmap::fromImage(*imageObject);
+    if(scene==nullptr) scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    ui->graphicsView->repaint();
 }

@@ -16,6 +16,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void repaintImage();
+    
 private slots:
     void on_actionOpen_Image_triggered();
 
