@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->showMaximized();
 }
 
 MainWindow::~MainWindow()
@@ -1196,9 +1197,7 @@ void MainWindow::repaintImage()
 
 void MainWindow::deleteTemp()
 {
-    if (auto_save_enable) {
-        QDir dir(file_path+"/temp");
-        if (dir.exists())
-            dir.removeRecursively();
-    }
+    QDir dir(file_path+"/temp");
+    if (dir.exists())
+        dir.removeRecursively();
 }
