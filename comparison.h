@@ -22,10 +22,12 @@ public:
 
     void set_comparison_image(QPixmap mci);
 
+    void set_similarity_label(QString similarity);
 
 private:
     Ui::Comparison *ui;
     QPixmap image, comparison_image;
+    QString similarity_label;
 };
 
 #endif // COMPARISON_H

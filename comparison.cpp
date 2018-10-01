@@ -24,6 +24,10 @@ void Comparison::set_comparison_image(QPixmap mci){
     comparison_image = mci;
 }
 
+void Comparison::set_similarity_label(QString similarity){
+    similarity_label = similarity;
+}
+
 void Comparison::showEvent(QShowEvent *){
     QGraphicsScene *scene;
     scene = new QGraphicsScene(this);
@@ -43,4 +47,6 @@ void Comparison::showEvent(QShowEvent *){
     Comparison::connect(ui->graphicsView_2->horizontalScrollBar(), SIGNAL(valueChanged(int)), ui->graphicsView->horizontalScrollBar(), SLOT(setValue(int)));
     Comparison::connect(ui->graphicsView->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->graphicsView_2->verticalScrollBar(), SLOT(setValue(int)));
     Comparison::connect(ui->graphicsView_2->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->graphicsView->verticalScrollBar(), SLOT(setValue(int)));
+
+    ui->similarity_label->setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">"+similarity_label+"</span></p></body></html>");
 }

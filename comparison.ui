@@ -13,14 +13,25 @@
   <property name="windowTitle">
    <string>Side by Side Comparison</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item alignment="Qt::AlignVCenter">
+    <widget class="QLabel" name="similarity_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QGraphicsView" name="graphicsView"/>
-     </item>
-     <item>
-      <widget class="QGraphicsView" name="graphicsView_2"/>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QGraphicsView" name="graphicsView_2"/>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="graphicsView"/>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
