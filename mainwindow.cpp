@@ -40,7 +40,7 @@ void MainWindow::closeEvent(QCloseEvent *)
     deleteTemp();
 }
 
-void MainWindow::resizeEvent(QResizeEvent *event)
+void MainWindow::resizeEvent(QResizeEvent *)
 {
     resize_trigger=true;
     if (ui->actionSave_Image->isEnabled()) repaintImage();
