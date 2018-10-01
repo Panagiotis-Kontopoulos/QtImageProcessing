@@ -572,13 +572,12 @@ void MainWindow::on_actionComparison_triggered()
         FM=((2*RC*PR/(RC+PR))*100); // FM=(((2*RC*PR)/(RC+PR))*100)/100;
         QString str = QString::number(double(FM));
         QMessageBox::information(this,"F-Measure Comparison","Similarity : "+str+" %");
+        Comparison *comparison_form;
+        comparison_form = new Comparison;
+        comparison_form->set_image(image);
+        comparison_form->set_comparison_image(comparison_image);
+        comparison_form->showMaximized();
       }
-
-      Comparison *comparison_form;
-      comparison_form = new Comparison;
-      comparison_form->set_image(image);
-      comparison_form->set_comparison_image(comparison_image);
-      comparison_form->showMaximized();
 }
 
 void MainWindow::on_actionEvaluation_triggered()
