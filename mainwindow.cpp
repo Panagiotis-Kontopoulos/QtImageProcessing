@@ -108,6 +108,9 @@ void MainWindow::on_actionEnable_Auto_Save_triggered()
     ui->actionDisable_Auto_Save->setEnabled(true);
     stage_num = 0;
     total_stages = 0;
+    if (!QDir(file_path+"/temp").exists()){
+        QDir().mkdir(file_path+"/temp");
+    }
     auto_save_Function();
     auto_save_enable = true;
 }
@@ -128,8 +131,8 @@ void MainWindow::auto_save_Function()
         }
 
     }
-    imageObject->save(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
-    QMessageBox::information(this,"Auto Save",file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    imageObject->save(file_path+"/temp"+"/stage"+QString::number(stage_num)+"_"+file_name);
+    QMessageBox::information(this,"Auto Save",file_path+"/temp"+"/stage"+QString(stage_num)+"_"+file_name);
     if (stage_num >= 1 ) ui->actionUndo->setEnabled(true);
     else ui->actionUndo->setEnabled(false);
     if (stage_num < total_stages) ui->actionRedo->setEnabled(true);
@@ -1129,7 +1132,7 @@ void MainWindow::on_actionUndo_triggered()
 {
     undo_function=true;
     if (stage_num > 0) stage_num--;
-    QString file_url(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
+    QString file_url(file_path+"/temp"+"/stage"+QString::number(stage_num)+"_"+file_name);
     QFileInfo fileInfo(file_url);
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
@@ -1151,7 +1154,7 @@ void MainWindow::on_actionRedo_triggered()
     if (total_stages == stage_num) {
         ui->actionRedo->setEnabled(false);
     }
-    QString file_url(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
+    QString file_url(file_path+"/temp"+"/stage"+QString::number(stage_num)+"_"+file_name);
     QFileInfo fileInfo(file_url);
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
