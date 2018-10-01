@@ -147,12 +147,20 @@ void MainWindow::on_actionDisable_Auto_Save_triggered()
     ui->actionUndo->setEnabled(false);
     ui->actionRedo->setEnabled(false);
     auto_save_enable = false;
+
+    // Delete temp folder
+    QDir dir(file_path+"/temp");
+    dir.removeRecursively();
 }
 
 void MainWindow::on_actionExit_triggered()
 {
 
     QApplication::quit();
+
+    // Delete temp folder
+    QDir dir(file_path+"/temp");
+    dir.removeRecursively();
 }
 
 void MainWindow::on_actionMethod_Input_triggered()
