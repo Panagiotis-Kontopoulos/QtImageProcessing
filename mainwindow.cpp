@@ -112,9 +112,8 @@ void MainWindow::on_actionOpen_Image_triggered()
 
 void MainWindow::on_actionSave_Image_triggered()
 {
-    QMessageBox::information(this,"Save","Save File to "+file_path);
-    imageObject->save(file_path+"/saved_"+file_name);
-
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image File"),file_path,tr("*.tiff"));
+    imageObject->save(filename);
 }
 
 void MainWindow::on_actionEnable_Auto_Save_triggered()
