@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -86,7 +87,7 @@ private:
     QImage  *imageObject, *original_imageObject;
     QString file_path, file_name;
     int Ix,Iy,stage_num, total_stages, ksw = 0, ksh = 0, windowsize = 3;
-    bool auto_save_enable = false, from_input_method = false, undo_function=false, redo_function=false;
+    bool auto_save_enable = false, from_input_method = false, undo_function=false, redo_function=false, resize_trigger=false;
     double mean, deviation;
     QGraphicsScene *scene;
 

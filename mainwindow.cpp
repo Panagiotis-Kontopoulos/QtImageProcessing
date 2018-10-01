@@ -40,6 +40,13 @@ void MainWindow::closeEvent(QCloseEvent *)
     deleteTemp();
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    resize_trigger=true;
+    if (ui->actionSave_Image->isEnabled()) repaintImage();
+    resize_trigger=false;
+}
+
 void MainWindow::on_actionOpen_Image_triggered()
 {
     QString file_url = QFileDialog::getOpenFileName(this,tr("Open Image File"),QDir::currentPath(),tr("*.tiff"));
@@ -1182,7 +1189,7 @@ void MainWindow::on_actionRedo_triggered()
 
 void MainWindow::repaintImage()
 {
-    if (auto_save_enable){
+    if (auto_save_enable && !resize_trigger){
         auto_save_Function();
     }
     image = QPixmap::fromImage(*imageObject);
