@@ -41,4 +41,6 @@ void Comparison::showEvent(QShowEvent *){
 
     Comparison::connect(ui->graphicsView->horizontalScrollBar(), SIGNAL(valueChanged(int)), ui->graphicsView_2->horizontalScrollBar(), SLOT(setValue(int)));
     Comparison::connect(ui->graphicsView_2->horizontalScrollBar(), SIGNAL(valueChanged(int)), ui->graphicsView->horizontalScrollBar(), SLOT(setValue(int)));
+    Comparison::connect(ui->graphicsView->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->graphicsView_2->verticalScrollBar(), SLOT(setValue(int)));
+    Comparison::connect(ui->graphicsView_2->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->graphicsView->verticalScrollBar(), SLOT(setValue(int)));
 }
