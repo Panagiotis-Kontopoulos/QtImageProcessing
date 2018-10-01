@@ -194,7 +194,6 @@ void MainWindow::on_actionMethod_Input_triggered()
         QString text = in.readLine();
         if (!text.compare("Mask 4x4 white"))
         {
-            QMessageBox::information(this,"Success","Mask 4x4 white");
             ui->actionAll_White->trigger();
         }
         else if (!text.compare("Mask 4x4 black"))
@@ -534,9 +533,9 @@ void MainWindow::on_actionComparison_triggered()
     QFileInfo fileInfo(file_url);
     file_path = fileInfo.path();
     file_name = fileInfo.fileName();
-    QMessageBox::information(this,file_name,file_name);
-    QMessageBox::information(this,file_path,file_path);
-    QMessageBox::information(this,file_url,file_url);
+//    QMessageBox::information(this,file_name,file_name);
+//    QMessageBox::information(this,file_path,file_path);
+//    QMessageBox::information(this,file_url,file_url);
     comparison_imageObject = new QImage;
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
