@@ -15,7 +15,7 @@ protected:
     void showEvent(QShowEvent *);
 
 public:
-    explicit Comparison(QWidget *parent = 0);
+    explicit Comparison(QWidget *parent = nullptr);
     ~Comparison();
 
     void set_image(QPixmap mi);

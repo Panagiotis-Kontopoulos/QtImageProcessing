@@ -571,7 +571,7 @@ void MainWindow::on_actionComparison_triggered()
         RC=CTP/(CFN+CTP);
         PR=CTP/(CFP+CTP);
         FM=((2*RC*PR/(RC+PR))*100); // FM=(((2*RC*PR)/(RC+PR))*100)/100;
-        QString str = QString::number(FM);
+        QString str = QString::number(double(FM));
         QMessageBox::information(this,"F-Measure Comparison","Similarity : "+str+" %");
       }
 
@@ -611,7 +611,7 @@ void MainWindow::on_actionEvaluation_triggered()
         RC=CTP/(CFN+CTP);
         PR=CTP/(CFP+CTP);
         FM=((2*RC*PR/(RC+PR))*100); // FM=(((2*RC*PR)/(RC+PR))*100)/100;
-        QString str = QString::number(FM);
+        QString str = QString::number(double(FM));
         QMessageBox::information(this,"F-Measure Evaluation","Similarity : "+str+" %");
       }
 
