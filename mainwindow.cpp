@@ -106,27 +106,34 @@ void MainWindow::on_actionEnable_Auto_Save_triggered()
     QMessageBox::information(this,"Auto Save","Auto Save Enabled");
     ui->actionEnable_Auto_Save->setEnabled(false);
     ui->actionDisable_Auto_Save->setEnabled(true);
-    auto_save_enable = true;
-    stage_num = -1;
-    total_stages = -1;
+    stage_num = 0;
+    total_stages = 0;
     auto_save_Function();
-    stage_num++;
-    total_stages++;
+    auto_save_enable = true;
 }
 
 void MainWindow::auto_save_Function()
 {
-    if (stage_num<0){
-        imageObject->save(file_path+"/stage0"+"_"+file_name);
-        QMessageBox::information(this,"Auto Save",file_path+"/stage0"+"_"+file_name);
+    if (auto_save_enable){
+        if (undo_function) {
+            qInfo()<<"Undo function";
+        }
+        else if (redo_function) {
+            qInfo()<<"Redo function";
+        }
+        else {
+            stage_num++;
+            total_stages=stage_num;
+            qInfo()<<"Other functions";
+        }
+
     }
-    else{
-        imageObject->save(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
-        QMessageBox::information(this,"Auto Save",file_path+"/stage"+QString(stage_num)+"_"+file_name);
-    }
-    ui->actionUndo->setEnabled(true);
-    stage_num++;
-    total_stages++;
+    imageObject->save(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
+    QMessageBox::information(this,"Auto Save",file_path+"/stage"+QString(stage_num)+"_"+file_name);
+    if (stage_num >= 1 ) ui->actionUndo->setEnabled(true);
+    else ui->actionUndo->setEnabled(false);
+    if (stage_num < total_stages) ui->actionRedo->setEnabled(true);
+    else ui->actionRedo->setEnabled(false);
 }
 
 void MainWindow::on_actionDisable_Auto_Save_triggered()
@@ -134,6 +141,8 @@ void MainWindow::on_actionDisable_Auto_Save_triggered()
     QMessageBox::information(this,"Auto Save","Auto Save Disabled");
     ui->actionEnable_Auto_Save->setEnabled(true);
     ui->actionDisable_Auto_Save->setEnabled(false);
+    ui->actionUndo->setEnabled(false);
+    ui->actionRedo->setEnabled(false);
     auto_save_enable = false;
 }
 
@@ -510,15 +519,16 @@ void MainWindow::on_actionComparison_triggered()
     QPixmap comparison_image = QPixmap::fromImage(*comparison_imageObject);
 
 
-    int IxC = image.width();
-    int IyC = image.height();
+    int IxC = comparison_image.width();
+    int IyC = comparison_image.height();
 
     float CTP=0,CFP=0,CFN=0; //Counter True Positive, Counter False Positive, Counter False Negative
     int error=0;
-    if (Ix>IxC || Iy>IyC)
+    if (Ix!=IxC || Iy!=IyC)
     {
-       //ShowMessage("Images have different size");
+       QMessageBox::information(this,"F-Measure Error","Images have different size");
        error=1;
+       return;
     }
     float RC=0,PR=0,FM=0; //Anakthsh, Akribeia, F-Measure
     for (int x=1;x<Ix-1;x++)
@@ -537,8 +547,8 @@ void MainWindow::on_actionComparison_triggered()
         RC=CTP/(CFN+CTP);
         PR=CTP/(CFP+CTP);
         FM=((2*RC*PR/(RC+PR))*100); // FM=(((2*RC*PR)/(RC+PR))*100)/100;
-        QString str = QT_STRINGIFY(FM);
-        //ShowMessage("Similarity : "+str+" %");
+        QString str = QString::number(FM);
+        QMessageBox::information(this,"F-Measure Comparison","Similarity : "+str+" %");
       }
 }
 
@@ -555,7 +565,7 @@ void MainWindow::on_actionEvaluation_triggered()
          {
             if (x>Ix || y>Iy)
             {
-               //ShowMessage("Images have different size");
+               QMessageBox::information(this,"F-Measure Error","Images have different size");
                error=1;
                break;
             }
@@ -571,9 +581,8 @@ void MainWindow::on_actionEvaluation_triggered()
         RC=CTP/(CFN+CTP);
         PR=CTP/(CFP+CTP);
         FM=((2*RC*PR/(RC+PR))*100); // FM=(((2*RC*PR)/(RC+PR))*100)/100;
-        QString str = QT_STRINGIFY(FM);
-        //ShowMessage("Similarity : "+str+" %");
-        //Form1->Caption = "Document Improved : "+str+" %";
+        QString str = QString::number(FM);
+        QMessageBox::information(this,"F-Measure Evaluation","Similarity : "+str+" %");
       }
 
 }
@@ -1118,36 +1127,40 @@ void MainWindow::on_actionShrink_Filter_triggered()
 
 void MainWindow::on_actionUndo_triggered()
 {
-    if (stage_num==0){
-        ui->actionUndo->setEnabled(false);
-        return;
-    }
-    stage_num--;
-    ui->actionRedo->setEnabled(true);
+    undo_function=true;
+    if (stage_num > 0) stage_num--;
     QString file_url(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
     QFileInfo fileInfo(file_url);
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
     *imageObject = imageReader.read();
+    if (stage_num == 0) {
+        ui->actionUndo->setEnabled(false);
+    }
+    qDebug()<<"Undo Stage: "+QString::number(stage_num);
+    qDebug()<<"Undo Total: "+QString::number(total_stages);
     qDebug()<<"Image Read";
     repaintImage();
+    undo_function=false;
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
-    if (stage_num==total_stages){
+    redo_function=true;
+    if (total_stages > stage_num) stage_num++;
+    if (total_stages == stage_num) {
         ui->actionRedo->setEnabled(false);
-        return;
     }
-    stage_num++;
-    ui->actionUndo->setEnabled(true);
     QString file_url(file_path+"/stage"+QString::number(stage_num)+"_"+file_name);
     QFileInfo fileInfo(file_url);
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
     *imageObject = imageReader.read();
+    qDebug()<<"Redo Stage: "+QString::number(stage_num);
+    qDebug()<<"Redo Total: "+QString::number(total_stages);
     qDebug()<<"Image Read";
     repaintImage();
+    redo_function=false;
 }
 
 void MainWindow::repaintImage()
@@ -1155,8 +1168,8 @@ void MainWindow::repaintImage()
     if (auto_save_enable){
         auto_save_Function();
     }
-    update();
     image = QPixmap::fromImage(*imageObject);
+    update();
     if(scene==nullptr) scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
