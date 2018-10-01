@@ -37,7 +37,7 @@ private slots:
 
     void on_actionMethod_Input_triggered();
 
-    void on_actionMore_triggered();
+    void on_actionAbout_triggered();
 
     void on_actionGasussian_Noise_triggered();
 

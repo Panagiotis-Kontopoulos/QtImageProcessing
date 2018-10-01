@@ -106,7 +106,6 @@ void MainWindow::on_actionOpen_Image_triggered()
     ui->actionMethod_Input->setEnabled(true);
     ui->menuF_Measure->setEnabled(true);
     ui->menuAdd_Noise->setEnabled(true);
-    ui->actionMore->setEnabled(true);
 
 }
 
@@ -273,9 +272,9 @@ void MainWindow::on_actionMethod_Input_triggered()
     file.close();
 }
 
-void MainWindow::on_actionMore_triggered()
+void MainWindow::on_actionAbout_triggered()
 {
-    QMessageBox::information(this,"More","More Options");
+    QMessageBox::information(this,"Qt Image Processing Program","Image processing program that covers a variaty of methods applied on an image. The program was developed under the scope of Special Communications & Signal Processing Cases with focus on Text Image Improvement.");
 }
 
 void MainWindow::on_actionGasussian_Noise_triggered()
