@@ -18,7 +18,8 @@
 #include <QDialogButtonBox>
 #include <QDebug>
 #include <QTextStream>
-#include "OddSpinBox.h"
+#include <QCloseEvent>
+#include "oddspinbox.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,6 +31,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *)
+{
+    // Delete temp folder
+    deleteTemp();
 }
 
 void MainWindow::on_actionOpen_Image_triggered()
@@ -149,8 +156,7 @@ void MainWindow::on_actionDisable_Auto_Save_triggered()
     auto_save_enable = false;
 
     // Delete temp folder
-    QDir dir(file_path+"/temp");
-    dir.removeRecursively();
+    deleteTemp();
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -159,8 +165,7 @@ void MainWindow::on_actionExit_triggered()
     QApplication::quit();
 
     // Delete temp folder
-    QDir dir(file_path+"/temp");
-    dir.removeRecursively();
+    deleteTemp();
 }
 
 void MainWindow::on_actionMethod_Input_triggered()
@@ -1187,4 +1192,13 @@ void MainWindow::repaintImage()
     ui->graphicsView->setScene(scene);
     ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
     ui->graphicsView->repaint();
+}
+
+void MainWindow::deleteTemp()
+{
+    if (auto_save_enable) {
+        QDir dir(file_path+"/temp");
+        if (dir.exists())
+            dir.removeRecursively();
+    }
 }

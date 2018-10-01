@@ -12,12 +12,17 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     void repaintImage();
     
+    void deleteTemp();
+
 private slots:
     void on_actionOpen_Image_triggered();
 
