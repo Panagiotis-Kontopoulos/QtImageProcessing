@@ -83,8 +83,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QPixmap image, original_image;
-    QImage  *imageObject, *original_imageObject;
+    QPixmap image, original_image, comparison_image;
+    QImage  *imageObject, *original_imageObject, *comparison_imageObject;
     QString file_path, file_name;
     int Ix,Iy,stage_num, total_stages, ksw = 0, ksh = 0, windowsize = 3;
     bool auto_save_enable = false, from_input_method = false, undo_function=false, redo_function=false, resize_trigger=false;

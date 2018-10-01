@@ -27,14 +27,17 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    oddspinbox.cpp
+    oddspinbox.cpp \
+    comparison.cpp
 
 HEADERS += \
         mainwindow.h \
-    oddspinbox.h
+    oddspinbox.h \
+    comparison.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    comparison.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

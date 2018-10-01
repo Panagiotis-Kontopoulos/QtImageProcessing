@@ -20,6 +20,7 @@
 #include <QTextStream>
 #include <QCloseEvent>
 #include "oddspinbox.h"
+#include "comparison.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -536,11 +537,11 @@ void MainWindow::on_actionComparison_triggered()
     QMessageBox::information(this,file_name,file_name);
     QMessageBox::information(this,file_path,file_path);
     QMessageBox::information(this,file_url,file_url);
-    QImage  *comparison_imageObject = new QImage;
+    comparison_imageObject = new QImage;
     QImageReader imageReader(file_url);
     imageReader.setDecideFormatFromContent(true);
     *comparison_imageObject = imageReader.read();
-    QPixmap comparison_image = QPixmap::fromImage(*comparison_imageObject);
+    comparison_image = QPixmap::fromImage(*comparison_imageObject);
 
 
     int IxC = comparison_image.width();
@@ -574,6 +575,12 @@ void MainWindow::on_actionComparison_triggered()
         QString str = QString::number(FM);
         QMessageBox::information(this,"F-Measure Comparison","Similarity : "+str+" %");
       }
+
+      Comparison *comparison_form;
+      comparison_form = new Comparison;
+      comparison_form->set_image(image);
+      comparison_form->set_comparison_image(comparison_image);
+      comparison_form->showMaximized();
 }
 
 void MainWindow::on_actionEvaluation_triggered()
