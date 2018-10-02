@@ -216,7 +216,7 @@ void MainWindow::on_actionAbout_triggered()
     QMessageBox::information(this,"Qt Image Processing Program","Image processing program that covers a variaty of methods applied on an image. The program was developed under the scope of Special Communications & Signal Processing Cases with focus on Text Image Improvement.");
 }
 
-void MainWindow::on_actionGasussian_Noise_triggered()
+void MainWindow::on_actionGaussian_Noise_triggered()
 {
     QDialog dialog(this);
     // Use a layout allowing to have a label next to each field

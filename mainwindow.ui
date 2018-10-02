@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>788</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -71,7 +71,7 @@
       <iconset resource="resources.qrc">
        <normaloff>:/res/Resources/noise_956.png</normaloff>:/res/Resources/noise_956.png</iconset>
      </property>
-     <addaction name="actionGasussian_Noise"/>
+     <addaction name="actionGaussian_Noise"/>
      <addaction name="actionRandom_Noise"/>
     </widget>
     <widget class="QMenu" name="menuMasks">
@@ -273,13 +273,13 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionGasussian_Noise">
+  <action name="actionGaussian_Noise">
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/res/Resources/noise_956.png</normaloff>:/res/Resources/noise_956.png</iconset>
    </property>
    <property name="text">
-    <string>Gasussian Noise</string>
+    <string>Gaussian Noise</string>
    </property>
   </action>
   <action name="actionRandom_Noise">
